@@ -3,7 +3,7 @@
 
 #include "graphics.h"
 
-volatile int* vga_buffer = (volatile int*) 0x08000000;
+volatile uint8_t* vga_buffer = (volatile uint8_t*) 0x08000000;
 
 void vga_init(){
     fill_display(0xFC);
