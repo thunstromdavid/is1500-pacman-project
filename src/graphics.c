@@ -6,7 +6,7 @@
 volatile int* vga_buffer = (volatile int*) 0x08000000;
 
 void vga_init(){
-    fill_display(0x00000000);
+    fill_display(0xFC);
 }
 
 void set_pixel(int x, int y, uint8_t color) {
