@@ -18,6 +18,8 @@ void vga_init();
 // Might change to 16 bit? Software resources unclear
 void set_pixel(int x, int y, uint8_t color);
 
+void draw_tile(int x, int y, int tile_type);
+
 // Fill display
 void fill_display(uint8_t color);
 
