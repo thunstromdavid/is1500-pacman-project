@@ -1,26 +1,34 @@
-SRC_DIR ?= ./
-OBJ_DIR ?= ./
-SOURCES ?= $(shell find $(SRC_DIR) -name '*.c' -or -name '*.S')
-OBJECTS ?= $(addsuffix .o, $(basename $(notdir $(SOURCES))))
-LINKER ?= $(SRC_DIR)/dtekv-script.lds
+# --- Toolchain ---
+TOOLCHAIN := riscv64-unknown-elf-
+CC       := $(TOOLCHAIN)gcc
+LD       := $(TOOLCHAIN)ld
+OBJCOPY  := $(TOOLCHAIN)objcopy
+OBJDUMP  := $(TOOLCHAIN)objdump
+AS       := $(TOOLCHAIN)as
 
-TOOLCHAIN ?= riscv32-unknown-elf-
-CFLAGS ?= -Wall -nostdlib -O3 -mabi=ilp32 -march=rv32imzicsr -fno-builtin
+# --- Project layout ---
+SRC_DIR := ./
+LINKER  := $(SRC_DIR)/dtekv-script.lds   # <-- move this up here
+SOURCES := $(shell find $(SRC_DIR) -name '*.c' -or -name '*.S')
+OBJECTS := $(addsuffix .o, $(basename $(notdir $(SOURCES))))
 
+# --- Flags ---
+CFLAGS  := -Wall -nostdlib -O3 -march=rv32imzicsr -mabi=ilp32 -fno-builtin
+LDFLAGS := -T $(LINKER) -nostdlib -static
 
+.PHONY: build clean run
 build: clean main.bin
 
-main.elf: 
-	$(TOOLCHAIN)gcc -c $(CFLAGS) $(SOURCES)
-	$(TOOLCHAIN)ld -o $@ -T $(LINKER) $(filter-out boot.o, $(OBJECTS)) softfloat.a
+main.elf:
+	$(CC) -c $(CFLAGS) $(SOURCES)
+	# If you need boot.o first, uncomment the next line and comment the one after.
+	# $(LD) -o $@ $(LDFLAGS) boot.o $(filter-out boot.o, $(OBJECTS))
+	$(LD) -o $@ $(LDFLAGS) $(filter-out boot.o, $(OBJECTS))
 
 main.bin: main.elf
-	$(TOOLCHAIN)objcopy --output-target binary $< $@
-	$(TOOLCHAIN)objdump -D $< > $<.txt
+	$(OBJCOPY) -O binary $< $@
+	$(OBJDUMP) -D $< > $<.txt
 
 clean:
 	rm -f *.o *.elf *.bin *.txt
 
-TOOL_DIR ?= ./tools
-run: main.bin
-	make -C $(TOOL_DIR) "FILE_TO_RUN=$(CURDIR)/$<"
