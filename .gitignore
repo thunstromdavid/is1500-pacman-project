@@ -54,3 +54,6 @@ Makefile
 
 # debug information files
 *.dwo
+
+
+.bin
