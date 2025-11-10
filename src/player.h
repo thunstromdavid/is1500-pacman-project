@@ -4,19 +4,16 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <stdint.h>
 
-// Size of a tile in pixels
-#define SIZE 8
+void player_set_position(int tile_x, int tile_y);
 
-void set_postition(int x, int y);
+// Movement based on tiles
+void move_up(void);
+void move_down(void);
+void move_left(void);
+void move_right(void);
 
-void move_up();
-
-void move_down();
-
-void move_left();
-
-void move_right();
+// Draw player at current position
+void player_render(void);
 
 #endif
