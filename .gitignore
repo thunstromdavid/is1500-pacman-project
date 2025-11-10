@@ -50,6 +50,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+Makefile
 
 # debug information files
 *.dwo
+
+
+.bin
+.vscode/
+.txt
