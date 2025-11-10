@@ -47,7 +47,7 @@ void draw_tile(int x, int y, int tile_type){
                 }
             }
         break;
-            
+
         case WALL_CORNER_TL:
             for (int y = startY + TILE_SIZE / 2 - 1; y <= startY + TILE_SIZE / 2 + 1; y++) {
                 for (int x = startX + TILE_SIZE / 2 - 1; x <= endX; x++) {
@@ -101,6 +101,22 @@ void draw_tile(int x, int y, int tile_type){
         break;
     }
 }
+
+void draw_player(int x, int y) {
+    int startX = x * TILE_SIZE;
+    int startY = y * TILE_SIZE;
+
+    int endX = startX + TILE_SIZE;
+    int endY = startY + TILE_SIZE;
+
+    for (int y = startY; y <= endY; y++) {
+        for (int x = startX; x <= endX; x++) {
+            set_pixel(x, y, 0xFC);
+        }
+    }
+}
+
+
 
 // Fill display with a specific color
 void fill_display(uint8_t color) {

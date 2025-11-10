@@ -10,15 +10,20 @@
 // https://canvas.kth.se/courses/56262/pages/literature-and-resources
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
+#define PACMAN_COLOUR 0xFC
+#define COIN_COLOUR 0xFF
+#define GHOST_COLOUR 0xE0
 
 // Initialize VGA output
-void vga_init();
+void vga_init(void);
 
 // Set value of pixel at position x and y to 8 bit color
 // Might change to 16 bit? Software resources unclear
 void set_pixel(int x, int y, uint8_t color);
 
 void draw_tile(int x, int y, int tile_type);
+
+void draw_player(int x, int y);
 
 // Fill display
 void fill_display(uint8_t color);
