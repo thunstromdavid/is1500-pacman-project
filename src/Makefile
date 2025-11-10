@@ -32,3 +32,6 @@ main.bin: main.elf
 clean:
 	rm -f *.o *.elf *.bin *.txt
 
+TOOL_DIR ?= ./tools
+run: main.bin
+	make -C $(TOOL_DIR) "FILE_TO_RUN=$(CURDIR)/$<"

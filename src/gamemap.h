@@ -4,9 +4,6 @@
 #include <stdint.h>
 #include "graphics.h"
 
-#define PACMAN_COLOUR 
-#define COIN_COLOUR
-#define GHOST_COLOUR
 #define PATH 0
 #define WALL_VERTICAL 1
 #define WALL_HORIZONTAL 2
