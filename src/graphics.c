@@ -4,6 +4,7 @@
 #include "graphics.h"
 #include "gamemap.h"
 
+
 // Pointer to the VGA Screen Buffer
 volatile uint8_t* vga_buffer = (volatile uint8_t*) 0x08000000;
 
@@ -115,7 +116,6 @@ void draw_player(int x, int y) {
         }
     }
 }
-
 
 
 // Fill display with a specific color

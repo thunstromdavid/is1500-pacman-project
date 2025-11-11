@@ -19,4 +19,5 @@ extern int map[MAP_HEIGHT][MAP_WIDTH];
 
 void set_gamemap(void);
 
+
 #endif

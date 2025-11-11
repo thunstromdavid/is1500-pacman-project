@@ -18,13 +18,12 @@ typedef struct {
     dir_t req_dir; //Requested
 
     int score; // Might move this?
-    int lives ;
+    int lives;
 } player_t;
 
 
 void player_init(player_t *p);
-void player_update(player_t *p);
-void player_draw(const player_t *p);
 void player_handle_input(player_t *p, dir_t input_dir);
-
+void player_update(player_t *p);
+void player_render(player_t *p);
 #endif
