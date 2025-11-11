@@ -2,13 +2,14 @@
 #include "graphics.h"
 #include "gamemap.h"
 #include "player.h"
+#include "game.h"
 
 int main() {
     vga_init();
 
-    set_gamemap();
+    game_init();
 
     while (1) {
-        player_render();
+        game_update();
     }
 }
