@@ -1,8 +1,8 @@
 // Authored by David Thunström
 // Date 2025-11-10
 
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYER
+#define PLAYER
 
 
 void player_set_position(int tile_x, int tile_y);
