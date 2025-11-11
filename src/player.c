@@ -7,8 +7,8 @@
 #include "common.h"
 
 void player_init(player_t *p){
-    p -> tx = 1;
-    p -> ty = 1;
+    p -> tx = 12;
+    p -> ty = 14;
 
     p -> px = p -> tx * TILE_SIZE;
     p -> py = p -> ty * TILE_SIZE;
@@ -24,12 +24,13 @@ int can_move_to(int tx, int ty){
     if (tx >= MAP_WIDTH || ty >= MAP_HEIGHT){
         return 0;
     }
-    return map[tx][ty] == PATH;
+    return map[ty][tx] == PATH;
 }
 
-void player_set_position(player_t *p, int *tx, int *ty){
-    p->tx = *tx;
-    p->ty = *ty;
+//REMOVE MAYBE?
+void player_set_position(player_t *p, int tx, int ty){
+    p->tx = tx;
+    p->ty = ty;
 }
 
 void dir_to_movement(dir_t dir, int *dx, int *dy) {
@@ -79,14 +80,14 @@ void player_update(player_t *p){
     //Move in current direction
     int dx, dy;
     dir_to_movement(p->dir, &dx, &dy);
-    if(p->dir == DIR_NONE){
+    if(p->dir != DIR_NONE){
         int ntx = p->tx + dx;
         int nty = p->ty + dy;
         
         if(can_move_to(ntx, nty)){
             p->tx = ntx;
             p->ty = nty;
-            player_set_position(p, &ntx, &nty);
+            player_set_position(p, ntx, nty);
         }
         else{
             p->dir = DIR_NONE;

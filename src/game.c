@@ -17,18 +17,12 @@ void game_init(){
     set_gamemap();
 }
 
-int can_move_to(int tile_x, int tile_y){
-    if (tile_x >= MAP_WIDTH || tile_y >= MAP_HEIGHT){return 0;}
-    
-    return map[tile_y][tile_x] == PATH;
-}
-
 void game_update() {
     if(player.lives < 1){
         game_state = GAME_STATE_GAME_OVER;
     }
     set_gamemap();
-    player_render(&player);
     handle_input(&player);
     player_update(&player);
+    player_render(&player);
 }
