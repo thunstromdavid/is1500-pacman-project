@@ -2,42 +2,30 @@
 // Date 2025-11-10
 
 #include <stdlib.h>
+#include "player.h"
 #include "gamemap.h"
+#include "common.h"
 
-int player_x = 0;
-int player_y = 0;
+void player_init(player_t *p){
+    p -> tx = 1;
+    p -> ty = 1;
 
-// Check if the tile we want to move to is valid, not a wall
-int can_move_to(int tile_x, int tile_y){
-    if (tile_x >= MAP_WIDTH || tile_y >= MAP_HEIGHT){return 0;}
-    
-    return map[tile_y][tile_x] == PATH;
+    p -> px = p -> tx * TILE_SIZE;
+    p -> py = p -> ty * TILE_SIZE;
+
+    p -> dir = DIR_NONE;
+    p -> req_dir = DIR_NONE;
+
+    p -> score = 0;
+    p -> lives = 3; 
 }
 
-// Attempt to move, fails if not valid
-void attempt_move(int dx, int dy){
-    int new_x = player_x + dx;
-    int new_y = player_y + dy;
-
-    if(!(can_move_to(new_x, new_y))){return;}
-    player_x = new_x;
-    player_y = new_y;
-}
-
-// Teleport player to a valid position. Set starting postition
-void player_set_position(int tile_x, int tile_y){
-    if (can_move_to(tile_x, tile_y)){
-        player_x = tile_x;
-        player_y = tile_y;
+void player_handle_input(player_t *p, dir_t input_dir){
+    if(input_dir != DIR_NONE){
+        p -> req_dir = input_dir;
     }
 }
 
-
-void move_up(void){player_y += 1;}
-void move_down(void){player_y -= 1;}
-void move_right(void){player_x += 1;}
-void move_left(void){player_x -= 1;}
-
-void player_render(void){
-    draw_player(player_x, player_y);
+void player_update(player_t *p){
+    
 }

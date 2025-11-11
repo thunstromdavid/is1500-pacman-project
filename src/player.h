@@ -3,17 +3,28 @@
 
 #ifndef PLAYER
 #define PLAYER
+#include "game.h"
+#include "common.h"
+
+typedef struct {
+    // Pixel cords
+    int px;
+    int py;
+    //Tile cords
+    int tx;
+    int ty;
+
+    dir_t dir;
+    dir_t req_dir; //Requested
+
+    int score; // Might move this?
+    int lives ;
+} player_t;
 
 
-void player_set_position(int tile_x, int tile_y);
-
-// Movement based on tiles
-void move_up(void);
-void move_down(void);
-void move_left(void);
-void move_right(void);
-
-// Draw player at current position
-void player_render(void);
+void player_init(player_t *p);
+void player_update(player_t *p);
+void player_draw(const player_t *p);
+void player_handle_input(player_t *p, dir_t input_dir);
 
 #endif

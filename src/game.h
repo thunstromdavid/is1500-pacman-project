@@ -12,7 +12,15 @@ typedef enum{
     GAME_STATE_GAME_OVER
 } game_state_t;
 
+handle_input();
+
+handle_collision();
+
+move_player();
+
 game_update();
+
+
 
 
 
