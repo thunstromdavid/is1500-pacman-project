@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "graphics.h"
+#include "common.h"
 
 #define PATH 0
 #define WALL_VERTICAL 1
@@ -19,5 +20,6 @@ extern int map[MAP_HEIGHT][MAP_WIDTH];
 
 void set_gamemap(void);
 
+void redraw_tile(int old_x, int old_y, dir_t direction);
 
 #endif
