@@ -3,6 +3,7 @@
 
 #include "graphics.h"
 #include "gamemap.h"
+#include "common.h"
 
 
 // Pointer to the VGA Screen Buffer
@@ -104,14 +105,17 @@ void draw_tile(int x, int y, int tile_type){
 }
 
 void draw_player(int x, int y) {
-    int startX = x * TILE_SIZE;
-    int startY = y * TILE_SIZE;
+    int startX = x;
+    int startY = y;
 
     int endX = startX + TILE_SIZE;
     int endY = startY + TILE_SIZE;
 
-    for (int y = startY; y <= endY; y++) {
-        for (int x = startX; x <= endX; x++) {
+    if (endX > SCREEN_WIDTH) endX = SCREEN_WIDTH;
+    if (endY > SCREEN_HEIGHT) endY = SCREEN_HEIGHT;
+
+    for (int y = startY; y < endY; y++) {
+        for (int x = startX; x < endX; x++) {
             set_pixel(x, y, 0xFC);
         }
     }
