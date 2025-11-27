@@ -18,10 +18,10 @@ game_state_t game_state;
 void game_init(){
     game_state = GAME_STATE_INIT;
     player_init(&player);
-    enemy_init(&enemy1, 27, 14, 0xE0);
-    enemy_init(&enemy2, 24, 14, 0xE4);
-    enemy_init(&enemy3, 23, 14, 0xE5);
-    enemy_init(&enemy4, 21, 14, 0xE9);
+    enemy_init(&enemy1, 24, 18, 0xE0);
+    enemy_init(&enemy2, 27, 15, 0xE4);
+    enemy_init(&enemy3, 27, 21, 0xE5);
+    enemy_init(&enemy4, 27, 8, 0xE9);
     set_gamemap();
     timer_init(60); 
 }
@@ -36,13 +36,15 @@ void game_update() {
                 fill_display(0x00); // Clear screen
                 set_gamemap();     
                 player_render(&player);
+                enemy_render(&enemy1);
+                enemy_render(&enemy2);
+                enemy_render(&enemy3);
+                enemy_render(&enemy4);
             }
             break;
 
         case GAME_STATE_RUNNING:
-            if(player.lives < 1){
-                game_state = GAME_STATE_GAME_OVER;
-            }
+            
             handle_input(&player);
 
             //Enemy updates and rendering

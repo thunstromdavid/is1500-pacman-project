@@ -2,6 +2,19 @@
 #include "gamemap.h"
 #include "input.h"
 
+void character_init(character_t *c, int tx, int ty, int colour) {
+    c -> tx = tx;
+    c -> ty = ty;
+
+    c -> px = c -> tx * TILE_SIZE;
+    c -> py = c -> ty * TILE_SIZE;
+
+    c -> dir = DIR_UP;
+    c -> req_dir = DIR_NONE;
+
+    c -> colour = colour;
+}
+
 static unsigned int next_random = 1; 
 
 // "Fake" Random function 
@@ -10,36 +23,36 @@ int get_random(int range) {
     return (((unsigned int)(next_random / 65536) % 32768) + get_sw()) % range; // Add switch state to improve randomness
 }
 
-void dir_to_movement(dir_t dir, int *px, int *py) {
+void dir_to_movement(dir_t dir, int *dx, int *dy) {
+    *dx = 0;
+    *dy = 0;
     switch (dir) {
         case DIR_UP:    
-            *px = 0;  
-            *py = -1; 
+            *dy = -1;
             break;
         case DIR_DOWN:  
-            *px = 0;  
-            *py = 1; 
+            *dy = 1;  
             break;
         case DIR_LEFT:  
-            *px = -1; 
-            *py = 0;  
+            *dx = -1; 
             break;
         case DIR_RIGHT: 
-            *px = 1;  
-            *py = 0;  
+            *dx = 1;  
             break;
-        default:          
-            *px = 0;  
-            *py = 0; 
+        case DIR_NONE:
             break;
     }
-}    
+}   
+
 int can_move_to(int tx, int ty){
     if (ty < 0 || ty >= MAP_HEIGHT){
         return 0;
     }
-    if ((tx < 0 || tx >= MAP_WIDTH) && ty == 14){
-        return 1; 
+    if ((tx < 0 || tx >= MAP_WIDTH)){
+        if(ty == 14) {
+            return 1;
+        }
+        return 0; 
     }
     return map[ty][tx] == PATH;
 }
@@ -49,10 +62,10 @@ int is_centered(int val) {
 }
 
 void update_entity_position(int *px, int *py, dir_t *current_dir, dir_t req_dir, int speed) {
+    int rdx, rdy;
     // Try requested direction
     if (req_dir != DIR_NONE && req_dir != *current_dir) {
         if (is_centered(*px) && is_centered(*py)) {
-            int rdx, rdy;
             dir_to_movement(req_dir, &rdx, &rdy);
             int ntx = (*px / TILE_SIZE) + rdx;
             int nty = (*py / TILE_SIZE) + rdy;
@@ -64,18 +77,17 @@ void update_entity_position(int *px, int *py, dir_t *current_dir, dir_t req_dir,
     }
 
     // Move in current direction
-    int dx, dy;
-    dir_to_movement(*current_dir, &dx, &dy);
+    dir_to_movement(*current_dir, &rdx, &rdy);
     
     if (*current_dir != DIR_NONE) {
-        int npx = *px + (dx * speed);
-        int npy = *py + (dy * speed);
+        int npx = *px + (rdx * speed);
+        int npy = *py + (rdy * speed);
 
         int check_x = npx;
         int check_y = npy;
         
-        if (dx > 0) check_x = npx + TILE_SIZE - 1;
-        if (dy > 0) check_y = npy + TILE_SIZE - 1;
+        if (rdx > 0) check_x = npx + TILE_SIZE - 1;
+        if (rdy > 0) check_y = npy + TILE_SIZE - 1;
         
         int ntx = check_x / TILE_SIZE;
         int nty = check_y / TILE_SIZE;

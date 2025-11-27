@@ -1,31 +1,21 @@
 #include "enemy.h"
-#include "gamemap.h"
 #include "common.h"
 #include "graphics.h"
 
 void enemy_init(enemy_t *e, int posx, int posy, int colour) {
-    e -> tx = posx;
-    e -> ty = posy;
-
-    e -> px = e -> tx * TILE_SIZE;
-    e -> py = e -> ty * TILE_SIZE;
-
-    e -> dir = DIR_UP;
-    e -> req_dir = DIR_NONE;
-
-    e -> colour = colour;
+    character_init(&e->base, posx, posy, colour);
 }
 
 void state_mode_enemy(enemy_t *e) {
-    update_entity_position(&e->px, &e->py, &e->dir, e->req_dir, 1);
+    update_entity_position(&e->base.px, &e->base.py, &e->base.dir, e->base.req_dir, 1);
     
-    if (e->dir == DIR_NONE) {
-        e->dir = get_random(4);
+    if (e->base.dir == DIR_NONE) {
+        e->base.dir = get_random(4);
     }
 }
 
 
 void enemy_render(enemy_t *e) {
-    redraw_tile(e->px, e->py, e->dir);
-    draw_character(e -> px, e -> py, e -> colour);
+    redraw_tile(e->base.px, e->base.py, e->base.dir);
+    draw_character(e->base.px, e->base.py, e->base.colour);
 }
