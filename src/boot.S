@@ -48,10 +48,10 @@ _isr_routine:
 	
 	// Find out the cause of this instruction
 	csrr t0, mcause
-	// Was this an external interrupt? (that is, msb='1')
+	// Is this an interrupt? (msb=1). Use bgeu to include 0x80000000
 	li t1, 0x80000000
-	// If so, then jump to the external interrupt handler
-	bgtu t0,t1, external_irq
+	// If so, then jump to the interrupt handler path
+	bgeu t0, t1, external_irq
 	add a6, t0, zero
 	// Check if its a ecall -- if so, skip setting a0=mepc and a6=mcause
 	addi t1, zero, 11
@@ -69,9 +69,13 @@ skip_init_args:
 	j restore
 
 external_irq:
+	// For external interrupts, don't advance mepc; just call handler
+	// a0 = mepc, a1 = (mcause & 0x7fffffff)
+	csrr a0, mepc
 	li t0, 0x7fffffff
 	csrr t1, mcause
-	and a0, t0, t1
+	and a1, t0, t1
+	jal interrupt_handler
 
 restore:
 	/* Restore registers from the stack */
@@ -117,6 +121,11 @@ _start:
 	csrw mie, x0
 	la sp, _stack_end
 	la gp, __global_pointer
+
+    // Set up the trap vector to point to our ISR handler
+    la t0, _isr_handler
+    csrw mtvec, t0
+
 	la a0, welcome_msg
 	li a7,4
 	ecall
@@ -126,7 +135,17 @@ _start:
 loop:	j loop
 
 enable_interrupt:
-	csrsi mie, 16 //MTIE (Machine Interrupt Enable register)
-	csrsi mstatus, 3 //enable global interrupts (MIE)
+	// Google Gemini helped with these changes, we couldn't get it to work properly with interrupts on the emulator
+	// Enable interrupts:
+	// Bit 4  (User Timer / Custom?) - from original code 'csrsi mie, 16'
+	// Bit 7  (MTIE - Machine Timer)
+	// Bit 11 (MEIE - Machine External)
+	// Bit 16 (Local Int 0 - Common in RISC-V cores)
+	li t0, 0x10890    // (1<<16) | (1<<11) | (1<<7) | (1<<4)
+	csrs mie, t0
+
+	// Enable global machine interrupts (MIE in mstatus, bit 3)
+	li t0, 0x8        // (1 << 3)
+	csrs mstatus, t0
 
 	ret
