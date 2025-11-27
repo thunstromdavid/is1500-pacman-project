@@ -3,15 +3,17 @@
 #include "common.h"
 #include "graphics.h"
 
-void enemy_init(enemy_t *e) {
-    e -> tx = 27;
-    e -> ty = 14;
+void enemy_init(enemy_t *e, int posx, int posy, int colour) {
+    e -> tx = posx;
+    e -> ty = posy;
 
     e -> px = e -> tx * TILE_SIZE;
     e -> py = e -> ty * TILE_SIZE;
 
     e -> dir = DIR_UP;
     e -> req_dir = DIR_NONE;
+
+    e -> colour = colour;
 }
 
 void state_mode_enemy(enemy_t *e) {
@@ -25,5 +27,5 @@ void state_mode_enemy(enemy_t *e) {
 
 void enemy_render(enemy_t *e) {
     redraw_tile(e->px, e->py, e->dir);
-    draw_character(e -> px, e -> py, 0xE0);
+    draw_character(e -> px, e -> py, e -> colour);
 }

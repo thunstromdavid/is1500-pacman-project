@@ -13,7 +13,6 @@
 #define SCREEN_HEIGHT 240
 #define PACMAN_COLOUR 0xFC
 #define COIN_COLOUR 0xFF
-#define GHOST_COLOUR 0xE0
 
 // Initialize VGA output
 void vga_init(void);

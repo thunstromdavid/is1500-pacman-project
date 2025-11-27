@@ -12,13 +12,16 @@
 #include "startscreen.h"
 
 player_t player;
-enemy_t enemy;
+enemy_t enemy1 ,enemy2, enemy3, enemy4;
 game_state_t game_state;
 
 void game_init(){
     game_state = GAME_STATE_INIT;
     player_init(&player);
-    enemy_init(&enemy);
+    enemy_init(&enemy1, 27, 14, 0xE0);
+    enemy_init(&enemy2, 24, 14, 0xE4);
+    enemy_init(&enemy3, 23, 14, 0xE5);
+    enemy_init(&enemy4, 21, 14, 0xE9);
     set_gamemap();
     timer_init(60); 
 }
@@ -41,8 +44,18 @@ void game_update() {
                 game_state = GAME_STATE_GAME_OVER;
             }
             handle_input(&player);
-            state_mode_enemy(&enemy);
-            enemy_render(&enemy);
+
+            //Enemy updates and rendering
+            state_mode_enemy(&enemy1);
+            state_mode_enemy(&enemy2);
+            state_mode_enemy(&enemy3);
+            state_mode_enemy(&enemy4);
+            enemy_render(&enemy1);
+            enemy_render(&enemy2);
+            enemy_render(&enemy3);
+            enemy_render(&enemy4);
+
+            //Player update and rendering
             player_update(&player);
             player_render(&player);
             break;
