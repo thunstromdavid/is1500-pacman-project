@@ -52,12 +52,9 @@ void game_update() {
         default:
             break;
     }
-<<<<<<< HEAD
     handle_input(&player);
     state_mode_enemy(&enemy);
     enemy_render(&enemy);
     player_update(&player);
     player_render(&player);
-=======
->>>>>>> 99b08244f4b665346728debc6d6772920fd51ffa
 }
