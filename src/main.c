@@ -4,6 +4,7 @@
 #include "player.h"
 #include "game.h"
 #include "common.h"
+#include "timer.h"
 
 int main() {
     volatile int* status = (volatile int*) 0x04000020;
@@ -12,10 +13,6 @@ int main() {
     game_init();
 
     while (1) {
-        // Clears the timeout
-        if (status[0] & 1) {
-            status[0] &= ~1;
-                game_update();
-        }
+        check_timer();
     }
 }
