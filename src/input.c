@@ -11,19 +11,19 @@ int get_sw(void) {
 void handle_input(player_t *p) {
     switch(get_sw()) {
         case 0:
-            p->req_dir = DIR_UP;
+            p->base.req_dir = DIR_UP;
         break;
 
         case 1:
-            p->req_dir = DIR_DOWN;
+            p->base.req_dir = DIR_DOWN;
         break;
 
         case 2:
-            p->req_dir = DIR_LEFT;
+            p->base.req_dir = DIR_LEFT;
         break;
 
         case 3:
-            p->req_dir = DIR_RIGHT;
+            p->base.req_dir = DIR_RIGHT;
         break;
     }
 }

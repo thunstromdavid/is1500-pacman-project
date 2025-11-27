@@ -12,6 +12,15 @@ typedef enum{
     DIR_RIGHT = 3
 } dir_t;
 
+typedef struct {
+    int tx, ty;          // Tile Position
+    int px, py;          // Pixel Position
+    dir_t dir, req_dir;  // Directions
+    int colour;
+} character_t;
+
+void character_init(character_t *c, int tx, int ty, int colour);
+
 int get_random(int range);
 
 void dir_to_movement(dir_t dir, int *px, int *py);

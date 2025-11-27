@@ -11,5 +11,6 @@ int main() {
     game_init();
 
     while (1) {
+        interrupt_handler();
     }
 }

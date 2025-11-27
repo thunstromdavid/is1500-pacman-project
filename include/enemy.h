@@ -4,16 +4,7 @@
 #include "common.h"
 
 typedef struct {
-    int px;
-    int py;
-    
-    int tx;
-    int ty;
-
-    dir_t dir;
-    dir_t req_dir; 
-
-    int colour;
+    character_t base;
 } enemy_t;
 
 void enemy_init(enemy_t *e, int posx, int posy, int colour);

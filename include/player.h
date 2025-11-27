@@ -7,17 +7,9 @@
 #include "common.h"
 
 typedef struct {
-    // Pixel cords
-    int px;
-    int py;
-    //Tile cords
-    int tx;
-    int ty;
+    character_t base;
 
-    dir_t dir;
-    dir_t req_dir; //Requested
-
-    int score; // Might move this?
+    int score; 
     int lives;
 } player_t;
 

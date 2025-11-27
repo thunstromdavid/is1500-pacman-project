@@ -1,35 +1,27 @@
 // Authored by David Thunström
 // Date 2025-11-10
 #include "player.h"
-#include "gamemap.h"
 #include "common.h"
 #include "graphics.h"
 
 void player_init(player_t *p){
-    p -> tx = 12;
-    p -> ty = 14;   
+    character_init(&p->base, 12, 14, 0xFC);
 
-    p -> px = p -> tx * TILE_SIZE;
-    p -> py = p -> ty * TILE_SIZE;
-
-    p -> dir = DIR_NONE;
-    p -> req_dir = DIR_NONE;
-
-    p -> score = 0;
-    p -> lives = 3; 
+    int lives = 3;
+    int score = 0;
 }
 
 void player_handle_input(player_t *p, dir_t input_dir){
     if(input_dir != DIR_NONE){
-        p -> req_dir = input_dir;
+        p->base.req_dir = input_dir;
     }
 }
 
 void player_update(player_t *p){
-    update_entity_position(&p->px, &p->py, &p->dir, p->req_dir, 1);
+    update_entity_position(&p->base.px, &p->base.py, &p->base.dir, p->base.req_dir, 1);
 }
 
 void player_render(player_t *p){
-    redraw_tile(p->px, p->py, p->dir);
-    draw_character(p->px, p->py, 0xFC); 
+    redraw_tile(p->base.px, p->base.py, p->base.dir);
+    draw_character(p->base.px, p->base.py, p->base.colour); 
 }
