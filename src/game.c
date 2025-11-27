@@ -8,25 +8,14 @@
 #include "graphics.h"
 #include "input.h"
 #include "common.h"
-#include "start_screen.h"
+#include "timer.h"
 
 player_t player;
 game_state_t game_state;
 
-void timer_start(void) {
-    volatile int* timer = (volatile int*) 0x04000020;
-
-    int update = 1000000; //30 hz
-
-    timer[2] = update & 0xFFFF; 
-    
-    timer[3] = update >> 16; 
-    
-    timer[1] = (3 << 1); 
-}
 
 void game_init(){
-    timer_start();
+    timer_init(60); 
     game_state = GAME_STATE_INIT;
     player_init(&player);
     set_gamemap();

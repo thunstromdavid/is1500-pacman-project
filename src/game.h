@@ -13,7 +13,6 @@ typedef enum{
     GAME_STATE_GAME_OVER
 } game_state_t;
 
-void timer_start(void);
 void game_init(void);
 void game_update(void);
 
