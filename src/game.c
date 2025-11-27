@@ -8,6 +8,7 @@
 #include "graphics.h"
 #include "input.h"
 #include "common.h"
+#include "start_screen.h"
 
 player_t player;
 game_state_t game_state;
