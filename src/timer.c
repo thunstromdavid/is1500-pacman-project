@@ -1,7 +1,7 @@
 #include "game.h"
 // Here we have used code from the labs
 
-int CLOCK_SPEED = 3000000; 
+int CLOCK_SPEED = 30000000; 
 volatile int* timer = (volatile int*) 0x04000020;
 
 extern void enable_interrupt(void);

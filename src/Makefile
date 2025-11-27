@@ -1,5 +1,5 @@
 # --- Toolchain ---
-TOOLCHAIN := riscv64-unknown-elf-
+TOOLCHAIN := riscv32-unknown-elf-
 CC       := $(TOOLCHAIN)gcc
 LD       := $(TOOLCHAIN)ld
 OBJCOPY  := $(TOOLCHAIN)objcopy
