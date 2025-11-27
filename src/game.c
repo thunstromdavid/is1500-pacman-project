@@ -9,23 +9,45 @@
 #include "input.h"
 #include "common.h"
 #include "timer.h"
+#include "startscreen.h"
 
 player_t player;
 game_state_t game_state;
 
 
 void game_init(){
-    timer_init(60); 
     game_state = GAME_STATE_INIT;
     player_init(&player);
     set_gamemap();
+    timer_init(60); 
 }
 
 void game_update() {
-    if(player.lives < 1){
-        game_state = GAME_STATE_GAME_OVER;
+    switch(game_state) {
+        case GAME_STATE_INIT:
+            draw_start_screen();
+            // Check for any button press to start
+            if (get_sw()) {
+                game_state = GAME_STATE_RUNNING;
+                fill_display(0x00); // Clear screen
+                set_gamemap();     
+                player_render(&player);
+            }
+            break;
+
+        case GAME_STATE_RUNNING:
+            if(player.lives < 1){
+                game_state = GAME_STATE_GAME_OVER;
+            }
+            player_render(&player);
+            handle_input(&player);
+            player_update(&player);
+            break;
+
+        case GAME_STATE_GAME_OVER:
+                break;
+            
+        default:
+            break;
     }
-    player_render(&player);
-    handle_input(&player);
-    player_update(&player);
 }
