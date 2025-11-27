@@ -1,7 +1,5 @@
 // Authored by David Thunström
 // Date 2025-11-10
-
-#include <stdlib.h>
 #include "player.h"
 #include "gamemap.h"
 #include "common.h"

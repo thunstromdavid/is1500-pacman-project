@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "enemy.h"
 #include "gamemap.h"
 #include "common.h"

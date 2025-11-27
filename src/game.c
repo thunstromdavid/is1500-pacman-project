@@ -1,7 +1,6 @@
 // Authored by David Thunström and Mathias Jonasson
 // Date 2025-11-11
 
-#include <stdlib.h>
 #include "game.h"
 #include "player.h"
 #include "enemy.h"
