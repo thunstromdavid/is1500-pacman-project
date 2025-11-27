@@ -25,6 +25,8 @@ void draw_tile(int x, int y, int tile_type);
 
 void draw_player(int x, int y);
 
+void redraw_tile(int old_x, int old_y, dir_t direction);
+
 // Fill display
 void fill_display(uint8_t color);
 

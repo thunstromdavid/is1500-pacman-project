@@ -10,6 +10,8 @@ typedef enum{
     DIR_DOWN = 1,
     DIR_LEFT = 2,
     DIR_RIGHT = 3
-} dir_t;    
+} dir_t;
+
+void dir_to_movement(dir_t dir, int *px, int *py);
 
 #endif
