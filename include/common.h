@@ -18,4 +18,8 @@ void dir_to_movement(dir_t dir, int *px, int *py);
 
 int can_move_to(int tx, int ty);
 
+int is_centered(int val);
+
+void update_entity_position(int *px, int *py, dir_t *current_dir, dir_t req_dir, int speed);
+
 #endif
