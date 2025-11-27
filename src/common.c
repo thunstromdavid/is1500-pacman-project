@@ -1,10 +1,12 @@
 #include "common.h"
 #include "gamemap.h"
 
-volatile int* random_seed = (volatile int*) 0x4000020;
+static unsigned int next_random = 1; 
 
+// "Fake" Random function 
 int get_random(int range) {
-    return *random_seed % range;
+    next_random = next_random * 1103515245 + 12345;
+    return ((unsigned int)(next_random / 65536) % 32768) % range;
 }
 
 void dir_to_movement(dir_t dir, int *px, int *py) {

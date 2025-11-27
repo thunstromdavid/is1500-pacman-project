@@ -41,9 +41,11 @@ void game_update() {
             if(player.lives < 1){
                 game_state = GAME_STATE_GAME_OVER;
             }
-            player_render(&player);
             handle_input(&player);
+            state_mode_enemy(&enemy);
+            enemy_render(&enemy);
             player_update(&player);
+            player_render(&player);
             break;
 
         case GAME_STATE_GAME_OVER:
@@ -52,9 +54,5 @@ void game_update() {
         default:
             break;
     }
-    handle_input(&player);
-    state_mode_enemy(&enemy);
-    enemy_render(&enemy);
-    player_update(&player);
-    player_render(&player);
+    
 }
