@@ -15,10 +15,12 @@ game_state_t game_state;
 
 
 void game_init(){
-    timer_init(60); 
     game_state = GAME_STATE_INIT;
     player_init(&player);
     set_gamemap();
+    timer_init(60); 
+    player_render(&player);
+
 }
 
 void game_update() {

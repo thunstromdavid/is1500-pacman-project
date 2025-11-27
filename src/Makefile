@@ -8,9 +8,11 @@ AS       := $(TOOLCHAIN)as
 
 # --- Project layout ---
 SRC_DIR := ./
-LINKER  := $(SRC_DIR)/dtekv-script.lds   # <-- move this up here
-SOURCES := $(shell find $(SRC_DIR) -name '*.c' -or -name '*.S')
-OBJECTS := $(addsuffix .o, $(basename $(notdir $(SOURCES))))
+LINKER  := $(SRC_DIR)/dtekv-script.lds 
+# Keep full paths so objects are unique and predictable
+SOURCES := $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*.S)
+OBJECTS := $(SOURCES:.c=.o)
+OBJECTS := $(OBJECTS:.S=.o)
 
 # --- Flags ---
 CFLAGS  := -Wall -nostdlib -O3 -march=rv32imzicsr -mabi=ilp32 -fno-builtin
@@ -19,11 +21,15 @@ LDFLAGS := -T $(LINKER) -nostdlib -static
 .PHONY: build clean run
 build: clean main.bin
 
-main.elf:
-	$(CC) -c $(CFLAGS) $(SOURCES)
-	# If you need boot.o first, uncomment the next line and comment the one after.
-	# $(LD) -o $@ $(LDFLAGS) boot.o $(filter-out boot.o, $(OBJECTS))
-	$(LD) -o $@ $(LDFLAGS) $(filter-out boot.o, $(OBJECTS))
+main.elf: $(OBJECTS)
+	$(LD) -o $@ $(LDFLAGS) $(filter-out %boot.o, $(OBJECTS))
+
+# Compilation rules (emit objects next to sources)
+%.o: %.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+%.o: %.S
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 main.bin: main.elf
 	$(OBJCOPY) -O binary $< $@

@@ -7,12 +7,10 @@
 #include "timer.h"
 
 int main() {
-    volatile int* status = (volatile int*) 0x04000020;
     vga_init();
 
     game_init();
 
     while (1) {
-        check_timer();
     }
 }
