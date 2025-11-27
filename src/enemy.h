@@ -4,7 +4,6 @@
 #include "common.h"
 
 typedef struct {
-    
     int px;
     int py;
     
@@ -15,4 +14,7 @@ typedef struct {
     dir_t req_dir; 
 } enemy_t;
 
-void m
+void enemy_init(enemy_t *e);
+void state_mode_enemy(enemy_t *e);
+void enemy_render(enemy_t *e);
+#endif

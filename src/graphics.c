@@ -104,7 +104,7 @@ void draw_tile(int x, int y, int tile_type){
     }
 }
 
-void draw_player(int x, int y) {
+void draw_character(int x, int y, uint8_t colour) {
     int startX = x;
     int startY = y;
 
@@ -116,7 +116,7 @@ void draw_player(int x, int y) {
 
     for (int y = startY; y < endY; y++) {
         for (int x = startX; x < endX; x++) {
-            set_pixel(x, y, 0xFC);
+            set_pixel(x, y, colour);
         }
     }
 }

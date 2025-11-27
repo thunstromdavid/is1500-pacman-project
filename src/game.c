@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "game.h"
 #include "player.h"
+#include "enemy.h"
 #include "gamemap.h"
 #include "graphics.h"
 #include "input.h"
@@ -11,27 +12,14 @@
 #include "timer.h"
 
 player_t player;
+enemy_t enemy;
 game_state_t game_state;
-
-<<<<<<< HEAD
-void timer_start(void) {
-    volatile int* timer = (volatile int*) 0x04000020;
-
-    int update = 500000; //30 hz
-
-    timer[2] = update & 0xFFFF; 
-    
-    timer[3] = update >> 16; 
-    
-    timer[1] = (3 << 1); 
-}
-=======
->>>>>>> main
 
 void game_init(){
     timer_init(60); 
     game_state = GAME_STATE_INIT;
     player_init(&player);
+    enemy_init(&enemy);
     set_gamemap();
 }
 
@@ -40,6 +28,8 @@ void game_update() {
         game_state = GAME_STATE_GAME_OVER;
     }
     handle_input(&player);
+    state_mode_enemy(&enemy);
+    enemy_render(&enemy);
     player_update(&player);
     player_render(&player);
 }

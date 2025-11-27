@@ -5,6 +5,7 @@
 #include "player.h"
 #include "gamemap.h"
 #include "common.h"
+#include "graphics.h"
 
 void player_init(player_t *p){
     p -> tx = 12;
@@ -18,17 +19,6 @@ void player_init(player_t *p){
 
     p -> score = 0;
     p -> lives = 3; 
-}
-
-int can_move_to(int tx, int ty){
-    if (ty < 0 || ty >= MAP_HEIGHT){
-        return 0;
-    }
-
-    if ((tx < 0 || tx >= MAP_WIDTH) && ty == 14){
-        return 1; 
-    }
-    return map[ty][tx] == PATH;
 }
 
 //REMOVE MAYBE?
@@ -105,5 +95,5 @@ void player_update(player_t *p){
 
 void player_render(player_t *p){
     redraw_tile(p->px, p->py, p->dir);
-    draw_player(p->px, p->py); 
+    draw_character(p->px, p->py, 0xFC); 
 }
