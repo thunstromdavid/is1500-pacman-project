@@ -46,9 +46,6 @@ void player_update(player_t *p){
             int npx = (p->px / TILE_SIZE) + rdx;
             int npy = (p->py / TILE_SIZE) + rdy;
 
-            int ntx = npx / TILE_SIZE;
-            int nty = npy / TILE_SIZE;
-
             if(can_move_to(npx, npy)){
                 p->dir = p->req_dir;
             }
