@@ -5,6 +5,7 @@
 #define GRAPHICS_H
 
 #include <stdint.h>
+#include "common.h"
 
 // Resolution of the screen and pixel buffer
 // https://canvas.kth.se/courses/56262/pages/literature-and-resources
@@ -23,7 +24,9 @@ void set_pixel(int x, int y, uint8_t color);
 
 void draw_tile(int x, int y, int tile_type);
 
-void draw_player(int x, int y);
+void draw_character(int x, int y, uint8_t colour);
+
+void redraw_tile(int old_x, int old_y, dir_t direction);
 
 // Fill display
 void fill_display(uint8_t color);

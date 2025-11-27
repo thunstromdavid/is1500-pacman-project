@@ -104,7 +104,7 @@ void draw_tile(int x, int y, int tile_type){
     }
 }
 
-void draw_player(int x, int y) {
+void draw_character(int x, int y, uint8_t colour) {
     int startX = x;
     int startY = y;
 
@@ -116,8 +116,35 @@ void draw_player(int x, int y) {
 
     for (int y = startY; y < endY; y++) {
         for (int x = startX; x < endX; x++) {
-            set_pixel(x, y, 0xFC);
+            set_pixel(x, y, colour);
         }
+    }
+}
+
+void redraw_tile(int px, int py, dir_t direction) {
+    switch(direction)  {
+        case(DIR_UP):
+            for (int x = px; x < px + TILE_SIZE; x++) {
+                set_pixel(x, py + TILE_SIZE, 0x00);
+            }
+            break;
+        case(DIR_DOWN):
+            for (int x = px; x < px + TILE_SIZE; x++) {
+                set_pixel(x, py - 1, 0x00);
+            }
+            break;
+        case(DIR_LEFT):
+            for (int y = py; y < py + TILE_SIZE; y++) {
+                set_pixel(px + TILE_SIZE, y, 0x00);
+            }
+            break;
+        case(DIR_RIGHT):
+            for (int y = py; y < py + TILE_SIZE; y++) {
+                set_pixel(px-1, y, 0x00);
+            }
+            break;
+        default:
+            break;
     }
 }
 

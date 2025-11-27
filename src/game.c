@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "game.h"
 #include "player.h"
+#include "enemy.h"
 #include "gamemap.h"
 #include "graphics.h"
 #include "input.h"
@@ -12,12 +13,13 @@
 #include "startscreen.h"
 
 player_t player;
+enemy_t enemy;
 game_state_t game_state;
-
 
 void game_init(){
     game_state = GAME_STATE_INIT;
     player_init(&player);
+    enemy_init(&enemy);
     set_gamemap();
     timer_init(60); 
 }
@@ -50,4 +52,12 @@ void game_update() {
         default:
             break;
     }
+<<<<<<< HEAD
+    handle_input(&player);
+    state_mode_enemy(&enemy);
+    enemy_render(&enemy);
+    player_update(&player);
+    player_render(&player);
+=======
+>>>>>>> 99b08244f4b665346728debc6d6772920fd51ffa
 }

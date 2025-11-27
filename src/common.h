@@ -10,6 +10,12 @@ typedef enum{
     DIR_DOWN = 1,
     DIR_LEFT = 2,
     DIR_RIGHT = 3
-} dir_t;    
+} dir_t;
+
+int get_random(int range);
+
+void dir_to_movement(dir_t dir, int *px, int *py);
+
+int can_move_to(int tx, int ty);
 
 #endif

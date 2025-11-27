@@ -42,30 +42,3 @@ void set_gamemap(void) {
         }
     }
 }
-
-void redraw_tile(int px, int py, dir_t direction) {
-    switch(direction)  {
-        case(DIR_UP):
-            for (int x = px; x < px + TILE_SIZE; x++) {
-                set_pixel(x, py + TILE_SIZE, 0x00);
-            }
-            break;
-        case(DIR_DOWN):
-            for (int x = px; x < px + TILE_SIZE; x++) {
-                set_pixel(x, py - 1, 0x00);
-            }
-            break;
-        case(DIR_LEFT):
-            for (int y = py; y < py + TILE_SIZE; y++) {
-                set_pixel(px + TILE_SIZE, y, 0x00);
-            }
-            break;
-        case(DIR_RIGHT):
-            for (int y = py; y < py + TILE_SIZE; y++) {
-                set_pixel(px-1, y, 0x00);
-            }
-            break;
-        default:
-            break;
-    }
-}
