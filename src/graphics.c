@@ -104,6 +104,25 @@ void draw_tile(int x, int y, int tile_type){
     }
 }
 
+void draw_point(int x, int y){
+    uint8_t colour = 0xFF;
+
+    int startX = x;
+    int startY = y;
+
+    int endX = startX + TILE_SIZE / 2;
+    int endY = startY + TILE_SIZE / 2;
+
+    if (endX > SCREEN_WIDTH) endX = SCREEN_WIDTH;
+    if (endY > SCREEN_HEIGHT) endY = SCREEN_HEIGHT;
+
+    for (int y = startY; y < endY; y++) {
+        for (int x = startX; x < endX; x++) {
+            set_pixel(x, y, colour);
+        }
+    }
+}
+
 void draw_character(int x, int y, uint8_t colour) {
     int startX = x;
     int startY = y;
