@@ -9,6 +9,12 @@ void character_init(character_t *c, int tx, int ty, int colour) {
     c -> px = c -> tx * TILE_SIZE;
     c -> py = c -> ty * TILE_SIZE;
 
+    c -> box.x = c -> px;
+    c -> box.y = c -> py;
+
+    c -> box.w = TILE_SIZE;
+    c -> box.h = TILE_SIZE;
+
     c -> dir = DIR_UP;
     c -> req_dir = DIR_NONE;
 
@@ -42,7 +48,31 @@ void dir_to_movement(dir_t dir, int *dx, int *dy) {
         case DIR_NONE:
             break;
     }
-}   
+}
+
+int check_colission(character_t *p, character_t *e) {
+    Rect boxP = p->box;
+    Rect boxE = e->box;
+
+    int leftP   = boxP.x;
+    int rightP  = boxP.x + boxP.w;
+    int topP    = boxP.y;
+    int bottomP = boxP.y + boxP.h;
+
+    int leftE   = boxE.x;
+    int rightE  = boxE.x + boxE.w;
+    int topE    = boxE.y;
+    int bottomE = boxE.y + boxE.h;
+
+    if (bottomP <= topE) return 0;
+    if (topP >= bottomE) return 0;
+    if (leftP >= rightE) return 0;
+    if (rightP <= leftE) return 0;
+
+    p->colour = 0xFF;
+
+    return 1;
+}
 
 int can_move_to(int tx, int ty){
     if (ty < 0 || ty >= MAP_HEIGHT){
@@ -61,7 +91,7 @@ int is_centered(int val) {
     return (val % TILE_SIZE) == 0;
 }
 
-void update_entity_position(int *px, int *py, dir_t *current_dir, dir_t req_dir, int speed) {
+void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir_t req_dir, int speed) {
     int rdx, rdy;
     // Try requested direction
     if (req_dir != DIR_NONE && req_dir != *current_dir) {
@@ -104,11 +134,16 @@ void update_entity_position(int *px, int *py, dir_t *current_dir, dir_t req_dir,
             }
             *px = npx;
             *py = npy;
+            box->x = npx;
+            box->y = npy;
         } else {
             // Wall has been hit. ALiigns to grid
             *px = current_tx * TILE_SIZE;
             *py = current_ty * TILE_SIZE;
             *current_dir = DIR_NONE;
+
+            box->x = *px;
+            box->y = *py;
         }
     }
 }
