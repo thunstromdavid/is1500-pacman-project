@@ -10,10 +10,13 @@
 #include "common.h"
 #include "timer.h"
 #include "startscreen.h"
+#include "points.h"
 
 player_t player;
 enemy_t enemy1 ,enemy2, enemy3, enemy4;
 game_state_t game_state;
+point_t points[MAX_POINTS];
+int score = 0;
 
 void game_init(){
     game_state = GAME_STATE_INIT;
@@ -22,6 +25,7 @@ void game_init(){
     enemy_init(&enemy2, 27, 15, 0xE4);
     enemy_init(&enemy3, 27, 21, 0xE5);
     enemy_init(&enemy4, 27, 8, 0xE9);
+    points_init(points);
     set_gamemap();
     timer_init(60); 
 }
@@ -40,12 +44,28 @@ void game_update() {
                 enemy_render(&enemy2);
                 enemy_render(&enemy3);
                 enemy_render(&enemy4);
+                point_render(points);
             }
             break;
 
         case GAME_STATE_RUNNING:
             
+            //Handle player input
             handle_input(&player);
+
+            // Check for collisions between player and enemies
+            if (check_collision_entity(&player.base, &enemy1.base.box) ||
+                check_collision_entity(&player.base, &enemy2.base.box) ||
+                check_collision_entity(&player.base, &enemy3.base.box) ||
+                check_collision_entity(&player.base, &enemy4.base.box)) {
+                player.base.colour = 0xFF;
+                game_state = GAME_STATE_GAME_OVER;
+            }
+            
+            // Check for point collection
+            if (check_point_collision(&player.base.box, points)) {
+                score += 10;
+            }
 
             //Enemy updates and rendering
             state_mode_enemy(&enemy1);
@@ -56,6 +76,8 @@ void game_update() {
             enemy_render(&enemy2);
             enemy_render(&enemy3);
             enemy_render(&enemy4);
+
+            point_render(points);
 
             //Player update and rendering
             player_update(&player);
