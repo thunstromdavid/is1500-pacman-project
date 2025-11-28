@@ -25,6 +25,8 @@ void draw_tile(int x, int y, int tile_type);
 
 void draw_character(int x, int y, uint8_t colour);
 
+void remove_character(int px, int py);
+
 void redraw_tile(int old_x, int old_y, dir_t direction);
 
 // Fill display

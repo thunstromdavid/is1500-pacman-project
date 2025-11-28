@@ -84,6 +84,9 @@ int can_move_to(int tx, int ty){
         }
         return 0; 
     }
+    if (map[ty][tx] == OUTSIDE && ty == 14) {
+        return 1;
+    }
     return map[ty][tx] == PATH;
 }
 
