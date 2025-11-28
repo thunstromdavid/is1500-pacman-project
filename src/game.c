@@ -50,7 +50,22 @@ void game_update() {
 
         case GAME_STATE_RUNNING:
             
+            //Handle player input
             handle_input(&player);
+
+            // Check for collisions between player and enemies
+            if (check_collision_entity(&player.base, &enemy1.base.box) ||
+                check_collision_entity(&player.base, &enemy2.base.box) ||
+                check_collision_entity(&player.base, &enemy3.base.box) ||
+                check_collision_entity(&player.base, &enemy4.base.box)) {
+                player.base.colour = 0xFF;
+                game_state = GAME_STATE_GAME_OVER;
+            }
+            
+            // Check for point collection
+            if (check_point_collision(&player.base.box, points)) {
+                score += 10;
+            }
 
             //Enemy updates and rendering
             state_mode_enemy(&enemy1);

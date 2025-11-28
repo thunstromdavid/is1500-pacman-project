@@ -119,8 +119,8 @@ void draw_point(int x, int y){
     int startX = x;
     int startY = y;
 
-    int endX = startX + TILE_SIZE / 2;
-    int endY = startY + TILE_SIZE / 2;
+    int endX = startX + TILE_SIZE / 4;
+    int endY = startY + TILE_SIZE / 4;
 
     if (endX > SCREEN_WIDTH) endX = SCREEN_WIDTH;
     if (endY > SCREEN_HEIGHT) endY = SCREEN_HEIGHT;
