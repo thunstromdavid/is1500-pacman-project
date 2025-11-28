@@ -10,6 +10,7 @@
 #include "common.h"
 #include "timer.h"
 #include "startscreen.h"
+#include "points.h"
 
 player_t player;
 enemy_t enemy1 ,enemy2, enemy3, enemy4;
@@ -23,6 +24,7 @@ void game_init(){
     enemy_init(&enemy2, 27, 15, 0xE4);
     enemy_init(&enemy3, 27, 21, 0xE5);
     enemy_init(&enemy4, 27, 8, 0xE9);
+    points_init(points);
     set_gamemap();
     timer_init(60); 
 }
@@ -41,6 +43,7 @@ void game_update() {
                 enemy_render(&enemy2);
                 enemy_render(&enemy3);
                 enemy_render(&enemy4);
+                point_render(points);
             }
             break;
 

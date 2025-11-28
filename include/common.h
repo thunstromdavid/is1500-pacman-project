@@ -31,7 +31,9 @@ int get_random(int range);
 
 void dir_to_movement(dir_t dir, int *px, int *py);
 
-int check_colission(character_t *p, character_t *e);
+int check_rect_collision(Rect *r1, Rect *r2);
+
+int check_collision_entity(character_t *p, Rect *r);
 
 int can_move_to(int tx, int ty);
 

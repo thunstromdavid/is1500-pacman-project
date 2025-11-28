@@ -17,7 +17,7 @@ void points_init(point_t *points) {
             
             if (count >= MAX_POINTS) return;
 
-            if (map[y][x] == PATH) { // Randomly place points
+            if (map[y][x] == PATH) {
                 points[count].tx = x;
                 points[count].ty = y;
                 
@@ -56,4 +56,3 @@ int check_point_collision(Rect *box, point_t *points) {
     }
     return 0;
 }               
- 

@@ -50,28 +50,31 @@ void dir_to_movement(dir_t dir, int *dx, int *dy) {
     }
 }
 
-int check_colission(character_t *p, character_t *e) {
-    Rect boxP = p->box;
-    Rect boxE = e->box;
+// Remade to be able to check collision between character and rectangle (points or enenemy)
+int check_rect_collision(Rect *r1, Rect *r2) {
+    int left1   = r1->x;
+    int right1  = r1->x + r1->w;
+    int top1    = r1->y;
+    int bottom1 = r1->y + r1->h;
 
-    int leftP   = boxP.x;
-    int rightP  = boxP.x + boxP.w;
-    int topP    = boxP.y;
-    int bottomP = boxP.y + boxP.h;
+    int left2   = r2->x;
+    int right2  = r2->x + r2->w;
+    int top2    = r2->y;
+    int bottom2 = r2->y + r2->h;
 
-    int leftE   = boxE.x;
-    int rightE  = boxE.x + boxE.w;
-    int topE    = boxE.y;
-    int bottomE = boxE.y + boxE.h;
-
-    if (bottomP <= topE) return 0;
-    if (topP >= bottomE) return 0;
-    if (leftP >= rightE) return 0;
-    if (rightP <= leftE) return 0;
-
-    p->colour = 0xFF;
+    if (bottom1 <= top2) return 0;
+    if (top1 >= bottom2) return 0;
+    if (left1 >= right2) return 0;
+    if (right1 <= left2) return 0;
 
     return 1;
+}
+
+int check_collision_entity(character_t *p, Rect *r) {
+    if (check_rect_collision(&p->box, r)) {
+        return 1;
+    }
+    return 0;
 }
 
 int can_move_to(int tx, int ty){
@@ -83,9 +86,6 @@ int can_move_to(int tx, int ty){
             return 1;
         }
         return 0; 
-    }
-    if (map[ty][tx] == OUTSIDE && ty == 14) {
-        return 1;
     }
     return map[ty][tx] == PATH;
 }
