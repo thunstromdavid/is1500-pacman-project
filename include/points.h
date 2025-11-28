@@ -1,5 +1,5 @@
-#ifndef POINTS_H
-#define POINTS_H
+#ifndef POINTS
+#define POINTS
 
 #include "common.h"
 

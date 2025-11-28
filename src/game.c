@@ -16,6 +16,7 @@ player_t player;
 enemy_t enemy1 ,enemy2, enemy3, enemy4;
 game_state_t game_state;
 point_t points[MAX_POINTS];
+int score;
 
 void game_init(){
     game_state = GAME_STATE_INIT;
@@ -38,12 +39,12 @@ void game_update() {
                 game_state = GAME_STATE_RUNNING;
                 fill_display(0x00); // Clear screen
                 set_gamemap();     
+                point_render(points);
                 player_render(&player);
                 enemy_render(&enemy1);
                 enemy_render(&enemy2);
                 enemy_render(&enemy3);
                 enemy_render(&enemy4);
-                point_render(points);
             }
             break;
 
@@ -63,6 +64,8 @@ void game_update() {
                     game_state = GAME_STATE_GAME_OVER;
                 }
 
+
+                // Set new positions maybe? 
                 remove_character(player.base.px, player.base.py);
                 remove_character(enemy1.base.px, enemy1.base.py);
                 remove_character(enemy2.base.px, enemy2.base.py);
@@ -76,12 +79,14 @@ void game_update() {
                 enemy_init(&enemy4, 27, 8, 0xE9);
             }
             
-            // Check for point collection
-            if (check_point_collision(&player.base.box, points)) {
-                player.score += 10;
-            }
+            // Check for point collection and update score
+           
+            score += check_point_collision(&player.base.box, points);
 
-            //Enemy updates and rendering
+            point_render(points);
+
+
+            //Enemy updates and rendering¨
             state_mode_enemy(&enemy1);
             state_mode_enemy(&enemy2);
             state_mode_enemy(&enemy3);
@@ -91,7 +96,6 @@ void game_update() {
             enemy_render(&enemy3);
             enemy_render(&enemy4);
 
-            point_render(points);
 
             //Player update and rendering
             player_update(&player);
