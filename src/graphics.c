@@ -101,6 +101,15 @@ void draw_tile(int x, int y, int tile_type){
                 }
             }
         break;
+
+        case OUTSIDE:
+            for (int y = startY; y < endY; y++) {
+                for (int x = startX; x < endX; x++) {
+                    set_pixel(x, y, 0x00);
+                }
+            }
+        break;
+        
     }
 }
 
