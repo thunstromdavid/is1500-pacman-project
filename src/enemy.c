@@ -7,7 +7,7 @@ void enemy_init(enemy_t *e, int posx, int posy, int colour) {
 }
 
 void state_mode_enemy(enemy_t *e) {
-    update_entity_position(&e->base.px, &e->base.py, &e->base.dir, e->base.req_dir, 1);
+    update_entity_position(&e->base.px, &e->base.py, &e->base.box, &e->base.dir, e->base.req_dir, 1);
     
     //Looking if a turn is possible
     int new_dir = get_random(4);
