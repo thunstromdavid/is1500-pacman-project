@@ -13,8 +13,8 @@ typedef struct {
     int lives;
 } player_t;
 
-
-void player_init(player_t *p);
+void player_init_stats(player_t *p);
+void player_reset_pos(player_t *p);
 void player_handle_input(player_t *p, dir_t input_dir);
 void player_update(player_t *p);
 void player_render(player_t *p);

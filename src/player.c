@@ -4,11 +4,16 @@
 #include "common.h"
 #include "graphics.h"
 
-void player_init(player_t *p){
-    character_init(&p->base, 12, 14, 0xE7);
 
-    int lives = 3;
-    int score = 0;
+void player_reset_pos(player_t *p){
+    character_init(&p->base, 12, 14, 0xE7);
+}
+
+void player_init_stats(player_t *p) {
+    p -> lives = 3;
+    p -> score = 0;
+
+    player_reset_pos(p);
 }
 
 void player_handle_input(player_t *p, dir_t input_dir){

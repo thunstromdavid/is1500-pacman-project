@@ -56,4 +56,3 @@ int check_point_collision(Rect *box, point_t *points) {
     }
     return 0;
 }               
- 

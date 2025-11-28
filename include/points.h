@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-#define MAX_POINTS 100
+#define MAX_POINTS 300
 #define POINT_VALUE 10
 
 typedef struct {

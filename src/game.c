@@ -16,11 +16,10 @@ player_t player;
 enemy_t enemy1 ,enemy2, enemy3, enemy4;
 game_state_t game_state;
 point_t points[MAX_POINTS];
-int score = 0;
 
 void game_init(){
     game_state = GAME_STATE_INIT;
-    player_init(&player);
+    player_init_stats(&player);
     enemy_init(&enemy1, 24, 18, 0xE0);
     enemy_init(&enemy2, 27, 15, 0xE4);
     enemy_init(&enemy3, 27, 21, 0xE5);
@@ -58,13 +57,28 @@ void game_update() {
                 check_collision_entity(&player.base, &enemy2.base.box) ||
                 check_collision_entity(&player.base, &enemy3.base.box) ||
                 check_collision_entity(&player.base, &enemy4.base.box)) {
-                player.base.colour = 0xFF;
-                game_state = GAME_STATE_GAME_OVER;
+                player.lives--;
+
+                if (player.lives <= 0) {
+                    game_state = GAME_STATE_GAME_OVER;
+                }
+
+                remove_character(player.base.px, player.base.py);
+                remove_character(enemy1.base.px, enemy1.base.py);
+                remove_character(enemy2.base.px, enemy2.base.py);
+                remove_character(enemy3.base.px, enemy3.base.py);
+                remove_character(enemy4.base.px, enemy4.base.py);
+
+                player_reset_pos(&player);
+                enemy_init(&enemy1, 24, 18, 0xE0);
+                enemy_init(&enemy2, 27, 15, 0xE4);
+                enemy_init(&enemy3, 27, 21, 0xE5);
+                enemy_init(&enemy4, 27, 8, 0xE9);
             }
             
             // Check for point collection
             if (check_point_collision(&player.base.box, points)) {
-                score += 10;
+                player.score += 10;
             }
 
             //Enemy updates and rendering
