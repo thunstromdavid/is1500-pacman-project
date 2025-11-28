@@ -5,7 +5,7 @@
 #include "graphics.h"
 
 void player_init(player_t *p){
-    character_init(&p->base, 12, 14, 0xFC);
+    character_init(&p->base, 12, 14, 0xE7);
 
     int lives = 3;
     int score = 0;
