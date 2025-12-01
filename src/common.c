@@ -81,7 +81,7 @@ int can_move_to(int tx, int ty){
     if (ty < 0 || ty >= MAP_HEIGHT){
         return 0;
     }
-    if ((tx < 0 || tx >= MAP_WIDTH)){
+    if ((tx < 0 || tx >= MAP_WIDTH) || map[ty][tx] == OUTSIDE){
         if(ty == 14) {
             return 1;
         }
