@@ -9,7 +9,7 @@
 #include "input.h"
 #include "common.h"
 #include "timer.h"
-#include "startscreen.h"
+#include "screens.h"
 #include "points.h"
 #include "display.h"
 
@@ -35,7 +35,7 @@ void game_init(){
 void game_update() {
     switch(game_state) {
         case GAME_STATE_INIT:
-            draw_start_screen();
+            draw_menu();
             // Check for any button press to start
             if (get_sw()) {
                 game_state = GAME_STATE_RUNNING;
@@ -51,6 +51,9 @@ void game_update() {
             break;
 
         case GAME_STATE_RUNNING:
+
+            // TODO : ADD PAUSE FUNCTIONALITY
+            // maybe check button press here to pause
 
             //Start displaying the score
             set_score_on_display(score);
@@ -118,7 +121,13 @@ void game_update() {
             break;
 
         case GAME_STATE_GAME_OVER:
-                break;
+            if(score == MAX_POINTS * POINT_VALUE) {
+                draw_win();
+            }
+            else {
+                draw_game_over();
+            }
+            break;
             
         default:
             break;

@@ -1,8 +1,8 @@
 // Authored by David Thunström
 // Date 2025-10-21
 
-#ifndef GRAPHICS_H
-#define GRAPHICS_H
+#ifndef GRAPHICS
+#define GRAPHICS
 
 #include <stdint.h>
 #include "common.h"
@@ -35,5 +35,10 @@ void redraw_tile(int old_x, int old_y, dir_t direction);
 
 // Fill display
 void fill_display(uint8_t color);
+
+void draw_menu(void);
+void draw_game_over(void);
+void draw_win(void);
+void draw_pause(void);
 
 #endif

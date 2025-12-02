@@ -1,7 +1,6 @@
 // Authored by Mathias Jonasson
 // Date 2025-12-02
 #include "display.h"
-#include <stdio.h>
 
 char binary_value[] = {
   0b01000000,

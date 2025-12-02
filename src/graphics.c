@@ -4,6 +4,7 @@
 #include "graphics.h"
 #include "gamemap.h"
 #include "common.h"
+#include "screens.h"
 
 
 // Pointer to the VGA Screen Buffer
@@ -188,4 +189,27 @@ void fill_display(uint8_t color) {
             vga_buffer[y * SCREEN_WIDTH + x] = color;
         }
     }
+}
+
+// Helper to draw a full screen image
+void draw_full_screen(char* pixels) {
+    for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
+        vga_buffer[i] = pixels[i];
+    }
+}
+
+void draw_menu(void) {
+    draw_full_screen(START_SCREEN);
+}
+
+void draw_game_over(void) {
+    draw_full_screen(GAME_OVER_SCREEN);
+}
+
+void draw_win(void) {
+    draw_full_screen(WIN_SCREEN);
+}
+
+void draw_pause(void) {
+    draw_full_screen(PAUSE_SCREEN);
 }
