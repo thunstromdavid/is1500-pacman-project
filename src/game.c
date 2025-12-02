@@ -11,6 +11,7 @@
 #include "timer.h"
 #include "startscreen.h"
 #include "points.h"
+#include "display.h"
 
 player_t player;
 enemy_t enemy1 ,enemy2, enemy3, enemy4;
@@ -49,6 +50,9 @@ void game_update() {
             break;
 
         case GAME_STATE_RUNNING:
+
+            //Start displaying the score
+            set_score_on_display(score);
             
             //Handle player input
             handle_input(&player);
@@ -80,7 +84,6 @@ void game_update() {
             }
             
             // Check for point collection and update score
-           
             score += check_point_collision(&player.base.box, points);
 
             point_render(points);
