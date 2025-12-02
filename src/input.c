@@ -8,6 +8,11 @@ int get_sw(void) {
   return *p & 0x7;
 }
 
+int get_btn(void) {
+    volatile int* p = (volatile int*) 0x040000d0;
+    return *p & 0x1;
+}
+
 void handle_input(player_t *p) {
     switch(get_sw()) {
         case 0:
