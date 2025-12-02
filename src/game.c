@@ -11,12 +11,14 @@
 #include "timer.h"
 #include "startscreen.h"
 #include "points.h"
+#include "display.h"
 
 player_t player;
 enemy_t enemy1 ,enemy2, enemy3, enemy4;
 game_state_t game_state;
 point_t points[MAX_POINTS];
 int score;
+int score_left = MAX_POINTS;
 
 void game_init(){
     game_state = GAME_STATE_INIT;
@@ -49,6 +51,9 @@ void game_update() {
             break;
 
         case GAME_STATE_RUNNING:
+
+            //Start displaying the score
+            set_score_on_display(score);
             
             //Handle player input
             handle_input(&player);
@@ -79,9 +84,19 @@ void game_update() {
                 enemy_init(&enemy4, 27, 8, 0xE9);
             }
             
-            // Check for point collection and update score
-           
-            score += check_point_collision(&player.base.box, points);
+            // Call the function and save result
+            int points_gained = check_point_collision(&player.base.box, points);
+
+            // Check if we actually hit something
+            if (points_gained > 0) {
+                score += points_gained; // Update score
+                score_left--;           // Update remaining count
+            }
+
+            // Check Game Over
+            if (!score_left) {
+                game_state = GAME_STATE_GAME_OVER;
+            }
 
             point_render(points);
 
