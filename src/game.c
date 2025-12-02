@@ -43,7 +43,10 @@ void game_update() {
                 set_gamemap();     
                 point_render(points);
                 player_render(&player);
-                
+                enemy_render(&enemy1);
+                enemy_render(&enemy2);
+                enemy_render(&enemy3);
+                enemy_render(&enemy4);
             }
             break;
 
@@ -55,7 +58,31 @@ void game_update() {
             //Handle player input
             handle_input(&player);
 
-           
+            // Check for collisions between player and enemies
+            if (check_collision_entity(&player.base, &enemy1.base.box) ||
+                check_collision_entity(&player.base, &enemy2.base.box) ||
+                check_collision_entity(&player.base, &enemy3.base.box) ||
+                check_collision_entity(&player.base, &enemy4.base.box)) {
+                player.lives--;
+
+                if (player.lives <= 0) {
+                    game_state = GAME_STATE_GAME_OVER;
+                }
+
+
+                // Set new positions maybe? 
+                remove_character(player.base.px, player.base.py);
+                remove_character(enemy1.base.px, enemy1.base.py);
+                remove_character(enemy2.base.px, enemy2.base.py);
+                remove_character(enemy3.base.px, enemy3.base.py);
+                remove_character(enemy4.base.px, enemy4.base.py);
+
+                player_reset_pos(&player);
+                enemy_init(&enemy1, 24, 18, 0xE0);
+                enemy_init(&enemy2, 27, 15, 0xE4);
+                enemy_init(&enemy3, 27, 21, 0xE5);
+                enemy_init(&enemy4, 27, 8, 0xE9);
+            }
             
             // Call the function and save result
             int points_gained = check_point_collision(&player.base.box, points);
@@ -66,7 +93,7 @@ void game_update() {
                 score_left--;           // Update remaining count
             }
 
-            // 3. Check Game Over
+            // Check Game Over
             if (!score_left) {
                 game_state = GAME_STATE_GAME_OVER;
             }
@@ -75,8 +102,14 @@ void game_update() {
 
 
             //Enemy updates and rendering¨
-            
-            
+            state_mode_enemy(&enemy1);
+            state_mode_enemy(&enemy2);
+            state_mode_enemy(&enemy3);
+            state_mode_enemy(&enemy4);
+            enemy_render(&enemy1);
+            enemy_render(&enemy2);
+            enemy_render(&enemy3);
+            enemy_render(&enemy4);
 
 
             //Player update and rendering
