@@ -17,7 +17,7 @@ void timer_init(int fps){
 }
 
 
-void interrupt_handler(void){
+void handle_interrupt(void){
     // Check if timer triggered (bit 0 of timer status)
     if (timer[0] & 1) {
         timer[0] &= ~1; // Clear timer interrupt

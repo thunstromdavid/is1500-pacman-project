@@ -12,12 +12,15 @@
 #include "screens.h"
 #include "points.h"
 #include "display.h"
+#include "measurement.h"
 
 player_t player;
 enemy_t enemy1 ,enemy2, enemy3, enemy4;
 game_state_t game_state;
 point_t points[MAX_POINTS];
 int score;
+
+
 
 void game_init(){
     game_state = GAME_STATE_INIT;
@@ -30,11 +33,13 @@ void game_init(){
 }
 
 void game_update() {
+ 
     switch(game_state) {
         case GAME_STATE_INIT:
             draw_menu();
             // Check for any button press to start
             if (get_btn()) {
+                
                 game_state = GAME_STATE_RUNNING;
                 fill_display(0x00); // Clear screen
                 set_gamemap();     
@@ -63,6 +68,7 @@ void game_update() {
 
                 if (player.lives <= 0) {
                     game_state = GAME_STATE_GAME_OVER;
+                    read_and_print_counters();
                 }
 
 
@@ -83,6 +89,7 @@ void game_update() {
             // Check Game Over
             if (score == MAX_POINTS * POINT_VALUE) {
                 game_state = GAME_STATE_GAME_OVER;
+                read_and_print_counters();
             }
 
             point_render(points);
@@ -101,6 +108,7 @@ void game_update() {
             break;
 
         case GAME_STATE_GAME_OVER:
+            
             if(score == MAX_POINTS * POINT_VALUE) {
                 draw_win();
             }

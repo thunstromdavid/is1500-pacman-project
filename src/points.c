@@ -9,7 +9,7 @@ void points_init(point_t *points) {
     // Loop through the map to find spots for dots
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
-            
+        
             if (count >= MAX_POINTS) return;
 
             if (map[y][x] == PATH) { // Randomly place points
