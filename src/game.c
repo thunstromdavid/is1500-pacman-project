@@ -18,7 +18,6 @@ enemy_t enemy1 ,enemy2, enemy3, enemy4;
 game_state_t game_state;
 point_t points[MAX_POINTS];
 int score;
-int score_left = MAX_POINTS;
 
 void game_init(){
     game_state = GAME_STATE_INIT;
@@ -78,16 +77,11 @@ void game_update() {
             }
             
             // Call the function and save result
-            int points_gained = check_point_collision(&player.base.box, points);
+            score += check_point_collision(&player.base.box, points);
 
-            // Check if we actually hit something
-            if (points_gained > 0) {
-                score += points_gained; // Update score
-                score_left--;           // Update remaining count
-            }
-
+            
             // Check Game Over
-            if (!score_left) {
+            if (score == MAX_POINTS * POINT_VALUE) {
                 game_state = GAME_STATE_GAME_OVER;
             }
 
