@@ -11,7 +11,7 @@ int main() {
     vga_init();
     game_init();
 
-    while (1) {
-        handle_interrupt();
+    while(1) {
+        game_update();
     }
 }

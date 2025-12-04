@@ -13,12 +13,14 @@
 #include "points.h"
 #include "display.h"
 #include "measurement.h"
+#include "dtekv-lib.h"
 
 player_t player;
 enemy_t enemies[NUM_ENEMIES];
 game_state_t game_state;
 point_t points[MAX_POINTS];
 int score;
+int stats_printed = 0;
 
 
 
@@ -27,7 +29,6 @@ void game_init(){
     player_init_stats(&player);
     enemies_init(enemies);
     points_init(points);
-    set_gamemap();
     timer_init(60); 
 }
 void game_update() {
@@ -37,18 +38,18 @@ void game_update() {
             draw_menu();
             // Check for any button press to start
             if (get_btn()) {
-                clear_counters();
                 game_state = GAME_STATE_RUNNING;
                 fill_display(0x00); // Clear screen
-                set_gamemap();     
+                set_gamemap();  
                 reset_timer();
+                clear_counters();
             }
             break;
 
         case GAME_STATE_RUNNING:
 
         
-            if(get_time_seconds() == 10){
+            if(get_tick_count() == EXPECTED_TICKS){
                 game_state = GAME_STATE_GAME_OVER;
             }
 
@@ -58,7 +59,7 @@ void game_update() {
 
             for (int i = 0; i < NUM_ENEMIES; i++) {
                 if(check_collision_entity(&player.base, &enemies[i].base.box)) {
-                    player.lives--;
+                    //player.lives--;
 
                     if (player.lives <= 0) {
                         game_state = GAME_STATE_GAME_OVER;
@@ -91,6 +92,11 @@ void game_update() {
             }
             else {
                 draw_game_over();
+                
+                if (stats_printed == 0) {
+                    read_and_print_counters();
+                    stats_printed = 1; // Mark as done
+                }
             }
             break;
             

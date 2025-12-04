@@ -1,6 +1,6 @@
 #include "dtekv-lib.h"
 #include "timer.h"
-
+#include "enemy.h"
 
 void clear_counters() {
     // Clear Cycle and Instruction counters
@@ -17,13 +17,12 @@ void clear_counters() {
 
 void read_and_print_counters() {
     unsigned int val;
-
-    int time = get_time_seconds();
-    print_dec(time);
-
  
     asm volatile ("csrr %0, mcycle" : "=r"(val));
-    print("\n--- Performance Metrics ---\n");
+    print("\n--- Performance Metrics OPT 00---\n");
+    print("\n--Number of enemies: ");
+    print_dec(NUM_ENEMIES); 
+    print("\n");
     print("Total Cycles (Time): ");
     print_dec(val);
 

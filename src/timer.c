@@ -1,17 +1,20 @@
 #include "game.h"
+#include "timer.h"
 // Here we have used code from the labs
 
-int CLOCK_SPEED = 30000000; 
+
+
 volatile int* timer = (volatile int*) 0x04000020;
 
 // Time tracking variables
 static volatile int tick_count = 0;
-static int ticks_per_second = 0;
+static int ticks_per_second = 0;                                   
 
 extern void enable_interrupt(void);
 
 
 void timer_init(int fps){
+
     int update = CLOCK_SPEED / fps;
     ticks_per_second = fps;
     tick_count = 0;
@@ -46,4 +49,3 @@ int get_time_seconds(void) {
 void reset_timer(void) {
     tick_count = 0;
 }
-

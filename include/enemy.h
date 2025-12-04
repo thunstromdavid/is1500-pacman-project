@@ -3,7 +3,7 @@
 #include "game.h"
 #include "common.h"
 
-#define NUM_ENEMIES 4
+#define NUM_ENEMIES 25
 
 typedef struct {
     character_t base;
