@@ -41,10 +41,16 @@ void game_update() {
                 game_state = GAME_STATE_RUNNING;
                 fill_display(0x00); // Clear screen
                 set_gamemap();     
+                reset_timer();
             }
             break;
 
         case GAME_STATE_RUNNING:
+
+        
+            if(get_time_seconds() == 10){
+                game_state = GAME_STATE_GAME_OVER;
+            }
 
             set_score_on_display(score);
             

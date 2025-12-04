@@ -7,9 +7,7 @@ int enemy_configs[NUM_ENEMIES][3] = {
     {24, 18, 0xE0},
     {27, 15, 0x14}, 
     {20, 16, 0xA4}, 
-    {23, 18, 0x94},
-    {23, 18, 0xC4},
-    {23, 18, 0x04}      
+    {23, 18, 0x94}  
 };
 
 void enemy_init(enemy_t *e, int posx, int posy, int colour) {

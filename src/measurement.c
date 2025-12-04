@@ -1,4 +1,5 @@
 #include "dtekv-lib.h"
+#include "timer.h"
 
 
 void clear_counters() {
@@ -16,6 +17,9 @@ void clear_counters() {
 
 void read_and_print_counters() {
     unsigned int val;
+
+    int time = get_time_seconds();
+    print_dec(time);
 
  
     asm volatile ("csrr %0, mcycle" : "=r"(val));
