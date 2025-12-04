@@ -41,4 +41,6 @@ int is_centered(int val);
 
 void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir_t req_dir, int speed);
 
+void remove_character(character_t *c);
+
 #endif

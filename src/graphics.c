@@ -150,10 +150,6 @@ void draw_character(int x, int y, uint8_t colour) {
     }
 }
 
-void remove_character(int px, int py) {
-    draw_character(px, py, 0x00);
-}
-
 void redraw_tile(int px, int py, dir_t direction) {
     switch(direction)  {
         case(DIR_UP):

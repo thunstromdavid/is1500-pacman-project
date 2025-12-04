@@ -2,8 +2,27 @@
 #include "common.h"
 #include "graphics.h"
 
+
+int enemy_configs[NUM_ENEMIES][3] = {
+    {24, 18, 0xE0},
+    {27, 15, 0x14}, 
+    {20, 16, 0xA4}, 
+    {23, 18, 0x94},
+    {23, 18, 0xC4},
+    {23, 18, 0x04}      
+};
+
 void enemy_init(enemy_t *e, int posx, int posy, int colour) {
     character_init(&e->base, posx, posy, colour);
+}
+
+void enemies_init(enemy_t *enemies_array) {
+    for (int i = 0; i < NUM_ENEMIES; i++) {
+        enemy_init(&enemies_array[i], 
+                   enemy_configs[i][0], 
+                   enemy_configs[i][1], 
+                   enemy_configs[i][2]);
+    }
 }
 
 void state_mode_enemy(enemy_t *e) {
@@ -22,4 +41,23 @@ void state_mode_enemy(enemy_t *e) {
 void enemy_render(enemy_t *e) {
     redraw_tile(e->base.px, e->base.py, e->base.dir);
     draw_character(e->base.px, e->base.py, e->base.colour);
+}
+
+void enemies_render(enemy_t *enemies_array) {
+    for (int i = 0; i < NUM_ENEMIES; i++) {
+            enemy_render(&enemies_array[i]); 
+        }
+}
+
+void enemies_update(enemy_t *enemies_array) {
+    for (int i = 0; i < NUM_ENEMIES; i++) {
+        state_mode_enemy(&enemies_array[i]);
+        enemies_render(&enemies_array[i]);
+    }
+}
+
+void remove_enemies(enemy_t *enemies_array) {
+    for (int i = 0; i < NUM_ENEMIES; i++) {
+        remove_character(&enemies_array[i].base);
+    }
 }

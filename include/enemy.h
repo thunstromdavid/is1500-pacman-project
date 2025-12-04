@@ -2,12 +2,13 @@
 #define ENEMY
 #include "game.h"
 #include "common.h"
+#define NUM_ENEMIES 3
 
 typedef struct {
     character_t base;
 } enemy_t;
 
-void enemy_init(enemy_t *e, int posx, int posy, int colour);
-void state_mode_enemy(enemy_t *e);
-void enemy_render(enemy_t *e);
+void enemies_init(enemy_t *enemies_array);
+void enemies_update(enemy_t *enemies_array);
+void remove_enemies(enemy_t *enemies_array);
 #endif

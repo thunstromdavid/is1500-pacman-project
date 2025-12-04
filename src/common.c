@@ -1,6 +1,7 @@
 #include "common.h"
 #include "gamemap.h"
 #include "input.h"
+#include "graphics.h"
 
 void character_init(character_t *c, int tx, int ty, int colour) {
     c -> tx = tx;
@@ -149,4 +150,8 @@ void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir
             box->y = *py;
         }
     }
+}
+
+void remove_character(character_t *c) {
+    draw_character(c->px, c->py, 0x00);
 }
