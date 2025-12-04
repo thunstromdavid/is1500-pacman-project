@@ -27,10 +27,6 @@ void draw_point(int x, int y);
 
 void draw_character(int x, int y, uint8_t colour);
 
-void draw_point(int x, int y);
-
-void remove_character(int px, int py);
-
 void redraw_tile(int old_x, int old_y, dir_t direction);
 
 // Fill display

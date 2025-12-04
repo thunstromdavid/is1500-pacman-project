@@ -24,6 +24,7 @@ void player_handle_input(player_t *p, dir_t input_dir){
 
 void player_update(player_t *p){
     update_entity_position(&p->base.px, &p->base.py, &p->base.box, &p->base.dir, p->base.req_dir, 1);
+    player_render(p);
 }
 
 void player_render(player_t *p){
