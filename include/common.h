@@ -33,6 +33,8 @@ void dir_to_movement(dir_t dir, int *px, int *py);
 
 int check_rect_collision(Rect *r1, Rect *r2);
 
+int check_collision_entity(character_t *p, Rect *r);
+
 int check_collision_entities(character_t *p, character_t *e, int num_enemies);
 
 int can_move_to(int tx, int ty);

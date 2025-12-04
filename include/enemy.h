@@ -2,7 +2,6 @@
 #define ENEMY
 #include "game.h"
 #include "common.h"
-#define NUM_ENEMIES 3
 
 #define NUM_ENEMIES 4
 
