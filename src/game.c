@@ -13,8 +13,9 @@
 #include "points.h"
 #include "display.h"
 
+
 player_t player;
-enemy_t enemy1 ,enemy2, enemy3, enemy4;
+enemy_t enemies[NUM_ENEMIES];
 game_state_t game_state;
 point_t points[MAX_POINTS];
 int score;
@@ -22,8 +23,7 @@ int score;
 void game_init(){
     game_state = GAME_STATE_INIT;
     player_init_stats(&player);
-    enemy_init(&enemy1, 24, 18, 0xE0);
-    enemy_init(&enemy2, 27, 15, 0x14);
+    enemies_init(enemies);
     points_init(points);
     set_gamemap();
     timer_init(60); 
@@ -40,8 +40,7 @@ void game_update() {
                 set_gamemap();     
                 point_render(points);
                 player_render(&player);
-                enemy_render(&enemy1);
-                enemy_render(&enemy2);
+                enemies_render(enemies);
             }
             break;
 
@@ -57,8 +56,7 @@ void game_update() {
             handle_input(&player);
 
             // Check for collisions between player and enemies
-            if (check_collision_entity(&player.base, &enemy1.base.box) ||
-                check_collision_entity(&player.base, &enemy2.base.box)) {
+            if (check_collision_entities(&player.base, (character_t*)enemies, NUM_ENEMIES)) {
                 player.lives--;
 
                 if (player.lives <= 0) {
@@ -66,14 +64,8 @@ void game_update() {
                 }
 
 
-                // Set new positions maybe? 
-                remove_character(player.base.px, player.base.py);
-                remove_character(enemy1.base.px, enemy1.base.py);
-                remove_character(enemy2.base.px, enemy2.base.py);
-
                 player_reset_pos(&player);
-                enemy_init(&enemy1, 24, 18, 0xE0);
-                enemy_init(&enemy2, 27, 15, 0x14);
+                enemies_reset_pos(enemies);
             }
             
             // Call the function and save result
@@ -89,10 +81,7 @@ void game_update() {
 
 
             //Enemy updates and rendering¨
-            state_mode_enemy(&enemy1);
-            state_mode_enemy(&enemy2);
-            enemy_render(&enemy1);
-            enemy_render(&enemy2);
+            enemies_render(enemies);
 
 
             //Player update and rendering
