@@ -30,7 +30,6 @@ void game_init(){
     set_gamemap();
     timer_init(60); 
 }
-
 void game_update() {
  
     switch(game_state) {

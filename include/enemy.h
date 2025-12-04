@@ -4,6 +4,8 @@
 #include "common.h"
 #define NUM_ENEMIES 3
 
+#define NUM_ENEMIES 4
+
 typedef struct {
     character_t base;
 } enemy_t;

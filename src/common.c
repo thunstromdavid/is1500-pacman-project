@@ -71,9 +71,20 @@ int check_rect_collision(Rect *r1, Rect *r2) {
     return 1;
 }
 
+
+
 int check_collision_entity(character_t *p, Rect *r) {
     if (check_rect_collision(&p->box, r)) {
         return 1;
+    }
+    return 0;
+}
+
+int check_collision_entities(character_t *player, character_t *enemies, int num_enemies) {
+    for (int i = 0; i < NUM_ENEMIES; i++) {
+        if (check_collision_entity(player, &enemies[i].box)) {
+            return 1;
+        }
     }
     return 0;
 }
