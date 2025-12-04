@@ -5,6 +5,6 @@
 
 void timer_init(int fps);
 
-void interrupt_handler(void);
+void handle_interrupt(void);
 
 #endif

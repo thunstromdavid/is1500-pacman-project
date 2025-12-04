@@ -1,0 +1,4 @@
+Installation notes:
+
+1) Type 'make' in the folder to compile three binaries: dtekv-run, dtekv-upload, and dtekv-download
+2) These binaries require the libjtag_atlantic.so and libjtag_client.so dynamic libraries. Make sure to export LD_LIBRARY_PATH to point to these or to the local quartus-programmer installation.
