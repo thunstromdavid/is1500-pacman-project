@@ -1,29 +1,51 @@
-// Optional printing functions may use ecall and can trap; avoid for now
-// extern void print(const char *str);
-// extern void print_dec(int val);
-// Use 7-seg display for non-blocking output instead
+#include "dtekv-lib.h"
 
-// Baseline snapshot of user-accessible counters
-static unsigned int cycle_base = 0;
-static unsigned int instret_base = 0;
 
-// Clear by taking a baseline snapshot using readable CSRs
 void clear_counters() {
-    asm volatile ("csrr %0, cycle" : "=r"(cycle_base));
-    asm volatile ("csrr %0, instret" : "=r"(instret_base));
+    // Clear Cycle and Instruction counters
+    asm volatile ("csrw mcycle, x0");
+    asm volatile ("csrw minstret, x0");
+
+    // Clear Hardware Performance Monitor (HPM) counters
+    asm volatile ("csrw mhpmcounter3, x0");
+    asm volatile ("csrw mhpmcounter4, x0");
+    asm volatile ("csrw mhpmcounter5, x0");
+    asm volatile ("csrw mhpmcounter8, x0");
+    asm volatile ("csrw mhpmcounter9, x0");
 }
 
 void read_and_print_counters() {
-    unsigned int now_cycle = 0;
-    unsigned int now_instret = 0;
+    unsigned int val;
 
-    // Read user-accessible counters
-    asm volatile ("csrr %0, cycle" : "=r"(now_cycle));
-    asm volatile ("csrr %0, instret" : "=r"(now_instret));
+ 
+    asm volatile ("csrr %0, mcycle" : "=r"(val));
+    print("\n--- Performance Metrics ---\n");
+    print("Total Cycles (Time): ");
+    print_dec(val);
 
-    // Compute deltas since last clear
-    unsigned int cycles = now_cycle - cycle_base;
-    unsigned int instret = now_instret - instret_base;
+    asm volatile ("csrr %0, minstret" : "=r"(val));
+    print("\nInstructions Retired: ");
+    print_dec(val);
 
+    asm volatile ("csrr %0, mhpmcounter3" : "=r"(val));
+    print("\nHPM Counter 3: ");
+    print_dec(val);
 
+    asm volatile ("csrr %0, mhpmcounter4" : "=r"(val));
+    print("\nHPM Counter 4: ");
+    print_dec(val);
+
+    asm volatile ("csrr %0, mhpmcounter5" : "=r"(val));
+    print("\nHPM Counter 5: ");
+    print_dec(val);
+
+    asm volatile ("csrr %0, mhpmcounter8" : "=r"(val));
+    print("\nHPM Counter 8: ");
+    print_dec(val);
+
+    asm volatile ("csrr %0, mhpmcounter9" : "=r"(val));
+    print("\nHPM Counter 9: ");
+    print_dec(val);
+    
+    print("\n---------------------------\n");
 }

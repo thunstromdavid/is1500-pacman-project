@@ -8,7 +8,6 @@ extern void print(const char*);
 extern void print_dec(unsigned int);
 
 int main() {
-    print ("Prime: ");
     vga_init();
     game_init();
 
