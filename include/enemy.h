@@ -3,10 +3,10 @@
 #include "game.h"
 #include "common.h"
 
-#define NUM_ENEMIES 25
+#define NUM_ENEMIES 0
 
 typedef struct {
-    character_t base;
+    character_t base;   
 } enemy_t;
 
 void enemies_init(enemy_t *enemies_array);

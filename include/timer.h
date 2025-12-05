@@ -2,7 +2,7 @@
 #define TIMER
 
 #define CLOCK_SPEED 30000000
-#define EXPECTED_TICKS 100
+#define NUMB_TICKS 1000
 
 void timer_init(int fps);
 void handle_interrupt(void);

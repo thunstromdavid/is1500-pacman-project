@@ -1,8 +1,10 @@
+// Authored by David Thunström and Mathias Jonasson
+// Date 2025-12-05
+
 #include "game.h"
 #include "timer.h"
+
 // Here we have used code from the labs
-
-
 
 volatile int* timer = (volatile int*) 0x04000020;
 
@@ -19,7 +21,7 @@ void timer_init(int fps){
     ticks_per_second = fps;
     tick_count = 0;
 
-    timer[2] = update & 0xFFFF; 
+    timer[2] = update & 0xFFFF;     
     timer[3] = update >> 16; 
     timer[1] = 7; 
     enable_interrupt();

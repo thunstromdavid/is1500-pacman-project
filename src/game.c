@@ -21,6 +21,7 @@ game_state_t game_state;
 point_t points[MAX_POINTS];
 int score;
 int stats_printed = 0;
+int ticks = 0;
 
 
 
@@ -30,29 +31,30 @@ void game_init(){
     enemies_init(enemies);
     points_init(points);
     timer_init(60); 
+    clear_counters();
 }
 void game_update() {
- 
+    
+    
     switch(game_state) {
         case GAME_STATE_INIT:
             draw_menu();
             // Check for any button press to start
             if (get_btn()) {
-                game_state = GAME_STATE_RUNNING;
                 fill_display(0x00); // Clear screen
                 set_gamemap();  
-                reset_timer();
+                game_state = GAME_STATE_RUNNING;
                 clear_counters();
             }
             break;
 
         case GAME_STATE_RUNNING:
 
-        
-            if(get_tick_count() == EXPECTED_TICKS){
+            if(ticks == NUMB_TICKS) {
                 game_state = GAME_STATE_GAME_OVER;
             }
-
+            ticks++;
+            
             set_score_on_display(score);
             
             handle_input(&player);
@@ -63,7 +65,6 @@ void game_update() {
 
                     if (player.lives <= 0) {
                         game_state = GAME_STATE_GAME_OVER;
-                        read_and_print_counters();
                     }
 
                     remove_character(&player.base);
@@ -77,7 +78,6 @@ void game_update() {
 
             if (score == MAX_POINTS * POINT_VALUE) {
                 game_state = GAME_STATE_GAME_OVER;
-                read_and_print_counters();
             }
 
             point_render(points);
@@ -92,10 +92,9 @@ void game_update() {
             }
             else {
                 draw_game_over();
-                
                 if (stats_printed == 0) {
                     read_and_print_counters();
-                    stats_printed = 1; // Mark as done
+                    stats_printed += 1;
                 }
             }
             break;

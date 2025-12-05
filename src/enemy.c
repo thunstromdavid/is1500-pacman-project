@@ -7,27 +7,6 @@ int enemy_configs[NUM_ENEMIES][3] = {
     {24, 18, 0xE0},
     {27, 15, 0x14}, 
     {20, 16, 0xA4}, 
-    {23, 18, 0x94},
-    {24, 18, 0xE0},
-    {27, 15, 0x14}, 
-    {20, 16, 0xA4}, 
-    {23, 18, 0x94},
-    {24, 18, 0xE0},
-    {27, 15, 0x14}, 
-    {20, 16, 0xA4}, 
-    {23, 18, 0x94},
-    {24, 18, 0xE0},
-    {27, 15, 0x14}, 
-    {20, 16, 0xA4}, 
-    {23, 18, 0x94},
-    {24, 18, 0xE0},
-    {27, 15, 0x14}, 
-    {20, 16, 0xA4}, 
-    {23, 18, 0x94},
-    {24, 18, 0xE0},
-    {27, 15, 0x14}, 
-    {20, 16, 0xA4}, 
-    {23, 18, 0x94},
     {23, 18, 0x94}
 };
 
@@ -61,16 +40,10 @@ void enemy_render(enemy_t *e) {
     draw_character(e->base.px, e->base.py, e->base.colour);
 }
 
-void enemies_render(enemy_t *enemies_array) {
-    for (int i = 0; i < NUM_ENEMIES; i++) {
-            enemy_render(&enemies_array[i]); 
-        }
-}
-
 void enemies_update(enemy_t *enemies_array) {
     for (int i = 0; i < NUM_ENEMIES; i++) {
         state_mode_enemy(&enemies_array[i]);
-        enemies_render(&enemies_array[i]);
+        enemy_render(&enemies_array[i]);
     }
 }
 

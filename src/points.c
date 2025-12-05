@@ -1,3 +1,6 @@
+// Authored by Mathias Jonasson
+// Date 2025-12-05
+
 #include "points.h"
 #include "gamemap.h"
 #include "graphics.h"

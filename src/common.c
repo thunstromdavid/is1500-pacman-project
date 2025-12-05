@@ -1,3 +1,6 @@
+// Authored by Mathias Jonasson and David Thunström
+// Date 2025-11-29
+
 #include "common.h"
 #include "gamemap.h"
 #include "input.h"
