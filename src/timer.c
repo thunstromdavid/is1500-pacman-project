@@ -31,7 +31,7 @@ void timer_init(int fps){
 void handle_interrupt(void){
     // Check if timer triggered (bit 0 of timer status)
     if (timer[0] & 1) {
-        timer[0] &= ~1; // Clear timer interrupt
+        timer[0] = 0; // Clear timer interrupt
         tick_count++;
         game_update();
     }

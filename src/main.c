@@ -10,8 +10,9 @@ extern void print_dec(unsigned int);
 int main() {
     vga_init();
     game_init();
+    timer_init(60);
+
 
     while(1) {
-        game_update();
     }
 }

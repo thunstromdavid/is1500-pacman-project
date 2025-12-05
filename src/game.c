@@ -12,95 +12,109 @@
 #include "screens.h"
 #include "points.h"
 #include "display.h"
-#include "measurement.h"
-#include "dtekv-lib.h"
+//#include "measurement.h"
+//#include "dtekv-lib.h"
 
+
+// Define Global Variables
 player_t player;
 enemy_t enemies[NUM_ENEMIES];
 game_state_t game_state;
 point_t points[MAX_POINTS];
-int score;
-int stats_printed = 0;
-int ticks = 0;
 
-
+// Helper to reset all data for a fresh run
+void reset_game_data() {
+    player_init_stats(&player);
+    player_reset_pos(&player);
+    enemies_init(enemies);
+    points_init(points);
+    fill_display(0x00); 
+    set_gamemap();      
+}
 
 void game_init(){
     game_state = GAME_STATE_INIT;
     player_init_stats(&player);
-    enemies_init(enemies);
-    points_init(points);
-    timer_init(60); 
-    clear_counters();
 }
+
 void game_update() {
-    
+    static int button_cooldown = 0;
+    if (button_cooldown > 0) button_cooldown--;
     
     switch(game_state) {
         case GAME_STATE_INIT:
             draw_menu();
-            // Check for any button press to start
-            if (get_btn()) {
-                fill_display(0x00); // Clear screen
-                set_gamemap();  
+            
+            // Check button HERE. If pressed, transition state.
+            if (get_btn() && button_cooldown == 0) {
+                reset_game_data(); // Reset stats/map
                 game_state = GAME_STATE_RUNNING;
-                clear_counters();
+                button_cooldown = 30; // Wait 0.5 seconds (30 ticks)
             }
             break;
 
         case GAME_STATE_RUNNING:
-
-            if(ticks == NUMB_TICKS) {
-                game_state = GAME_STATE_GAME_OVER;
-            }
-            ticks++;
-            
-            set_score_on_display(score);
-            
+            set_score_on_display(player.score);
             handle_input(&player);
 
+            // Enemy Logic
             for (int i = 0; i < NUM_ENEMIES; i++) {
                 if(check_collision_entity(&player.base, &enemies[i].base.box)) {
-                    //player.lives--;
+                    player.lives--;
 
                     if (player.lives <= 0) {
                         game_state = GAME_STATE_GAME_OVER;
+                    } else {
+                        remove_character(&player.base);
+                        remove_enemies(enemies);
+                        player_reset_pos(&player);
+                        enemies_init(enemies);
                     }
-
-                    remove_character(&player.base);
-                    remove_enemies(enemies);
-                    player_reset_pos(&player);
-                    enemies_init(enemies);
                 }
             }
-            
-            score += check_point_collision(&player.base.box, points);
-
-            if (score == MAX_POINTS * POINT_VALUE) {
+            player.score += check_point_collision(&player.base.box, points);
+            set_score_on_display(player.score);
+            if (player.score >= MAX_POINTS * POINT_VALUE) {
                 game_state = GAME_STATE_GAME_OVER;
             }
+            if (get_btn() && button_cooldown == 0){
+                game_state = GAME_STATE_PAUSE;
+                button_cooldown = 30;
+            }
 
+            //Update object on screen
             point_render(points);
             enemies_update(enemies);
             player_update(&player);
+            
+            
+            break;
+        case GAME_STATE_PAUSE:
+            draw_pause();
+            if(get_btn() && button_cooldown == 0){
+                game_state = GAME_STATE_RUNNING;
+                button_cooldown = 30;
+                fill_display(0x00); 
+                set_gamemap();    
+            }
             break;
 
         case GAME_STATE_GAME_OVER:
-            
-            if(score == MAX_POINTS * POINT_VALUE) {
+            if(player.score >= MAX_POINTS * POINT_VALUE) {
                 draw_win();
-            }
-            else {
+            } else {
                 draw_game_over();
-                if (stats_printed == 0) {
-                    read_and_print_counters();
-                    stats_printed += 1;
-                }
+            }
+            if (get_btn() && button_cooldown == 0) {
+                reset_game_data();
+                game_state = GAME_STATE_RUNNING;
+                button_cooldown = 30;
             }
             break;
+        
             
         default:
             break;
     }
-    
 }
+

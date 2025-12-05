@@ -36,8 +36,8 @@ void state_mode_enemy(enemy_t *e) {
 }
 
 void enemy_render(enemy_t *e) {
-    redraw_tile(e->base.px, e->base.py, e->base.dir);
     draw_character(e->base.px, e->base.py, e->base.colour);
+    redraw_tile(e->base.px, e->base.py, e->base.dir);
 }
 
 void enemies_update(enemy_t *enemies_array) {

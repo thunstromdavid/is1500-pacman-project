@@ -8,7 +8,7 @@
 
 
 // Pointer to the VGA Screen Buffer
-volatile int* vga_buffer = (volatile int*) 0x08000000;
+volatile uint8_t* vga_buffer = (volatile uint8_t*) 0x08000000;
 
 // Initialize VGA output by filling the screen with a color
 void vga_init(){
