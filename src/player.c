@@ -6,7 +6,7 @@
 
 
 void player_reset_pos(player_t *p){
-    character_init(&p->base, 12, 14, 0xE7);
+    character_init(&p->base, 12, 14, PACMAN_COLOUR);
 }
 
 void player_init_stats(player_t *p) {
