@@ -1,3 +1,5 @@
+// Authored by  David Thunström
+// Date 2025-11-29
 #ifndef ENEMY
 #define ENEMY
 #include "game.h"

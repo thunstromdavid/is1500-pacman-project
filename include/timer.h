@@ -1,3 +1,6 @@
+// Authored by David Thunström
+// Date 2025-12-05
+
 #ifndef TIMER
 #define TIMER
 

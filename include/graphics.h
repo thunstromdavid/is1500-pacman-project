@@ -32,6 +32,7 @@ void redraw_tile(int old_x, int old_y, dir_t direction);
 // Fill display
 void fill_display(uint8_t color);
 
+// Drawing the screens for the different game states
 void draw_menu(void);
 void draw_game_over(void);
 void draw_win(void);

@@ -1,3 +1,6 @@
+// Authored by David Thunström and Mathias Jonasson
+// Date 2025-12-05
+
 #ifndef MEASUREMENT
 #define MEASUREMENT
 

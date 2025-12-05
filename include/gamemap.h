@@ -1,5 +1,8 @@
-#ifndef GAMEMAP_H
-#define GAMEMAP_H
+// Authored by Mathias Jonasson
+// Date 2025-12-05
+
+#ifndef GAMEMAP
+#define GAMEMAP
 
 #include <stdint.h>
 #include "graphics.h"

@@ -1,3 +1,5 @@
+// Authored by Mathias Jonasson and David Thunström
+// Date 2025-11-29
 #include "enemy.h"
 #include "common.h"
 #include "graphics.h"

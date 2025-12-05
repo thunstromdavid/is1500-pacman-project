@@ -1,3 +1,5 @@
+// Authored by David Thunström and Mathias Jonasson
+// Date 2025-12-05
 #include "dtekv-lib.h"
 #include "timer.h"
 #include "enemy.h"
