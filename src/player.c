@@ -6,7 +6,7 @@
 
 
 void player_reset_pos(player_t *p){
-    character_init(&p->base, 12, 14, 0xE7);
+    character_init(&p->base, 12, 14, PACMAN_COLOUR);
 }
 
 void player_init_stats(player_t *p) {
@@ -24,6 +24,7 @@ void player_handle_input(player_t *p, dir_t input_dir){
 
 void player_update(player_t *p){
     update_entity_position(&p->base.px, &p->base.py, &p->base.box, &p->base.dir, p->base.req_dir, 1);
+    player_render(p);
 }
 
 void player_render(player_t *p){

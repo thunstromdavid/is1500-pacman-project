@@ -1,5 +1,5 @@
 // Authored by David Thunström and Mathias Jonasson
-// Date 2025-11-11
+// Date 2025-12-05
 
 #include "game.h"
 #include "player.h"
@@ -12,125 +12,109 @@
 #include "screens.h"
 #include "points.h"
 #include "display.h"
+//#include "measurement.h"
+//#include "dtekv-lib.h"
 
+
+// Define Global Variables
 player_t player;
-enemy_t enemy1 ,enemy2, enemy3, enemy4;
+enemy_t enemies[NUM_ENEMIES];
 game_state_t game_state;
 point_t points[MAX_POINTS];
-int score;
-int score_left = MAX_POINTS;
+
+// Helper to reset all data for a fresh run
+void reset_game_data() {
+    player_init_stats(&player);
+    player_reset_pos(&player);
+    enemies_init(enemies);
+    points_init(points);
+    fill_display(0x00); 
+    set_gamemap();      
+}
 
 void game_init(){
     game_state = GAME_STATE_INIT;
     player_init_stats(&player);
-    enemy_init(&enemy1, 24, 18, 0xE0);
-    enemy_init(&enemy2, 27, 15, 0xE4);
-    enemy_init(&enemy3, 27, 21, 0xE5);
-    enemy_init(&enemy4, 27, 8, 0xE9);
-    points_init(points);
-    set_gamemap();
-    timer_init(60); 
 }
 
 void game_update() {
+    static int button_cooldown = 0;
+    if (button_cooldown > 0) button_cooldown--;
+    
     switch(game_state) {
         case GAME_STATE_INIT:
             draw_menu();
-            // Check for any button press to start
-            if (get_sw()) {
+            
+            // Check button HERE. If pressed, transition state.
+            if (get_btn() && button_cooldown == 0) {
+                reset_game_data(); // Reset stats/map
                 game_state = GAME_STATE_RUNNING;
-                fill_display(0x00); // Clear screen
-                set_gamemap();     
-                point_render(points);
-                player_render(&player);
-                enemy_render(&enemy1);
-                enemy_render(&enemy2);
-                enemy_render(&enemy3);
-                enemy_render(&enemy4);
+                button_cooldown = 30; // Wait 0.5 seconds (30 ticks)
             }
             break;
 
         case GAME_STATE_RUNNING:
-
-            // TODO : ADD PAUSE FUNCTIONALITY
-            // maybe check button press here to pause
-
-            //Start displaying the score
-            set_score_on_display(score);
-            
-            //Handle player input
+            set_score_on_display(player.score);
             handle_input(&player);
 
-            // Check for collisions between player and enemies
-            if (check_collision_entity(&player.base, &enemy1.base.box) ||
-                check_collision_entity(&player.base, &enemy2.base.box) ||
-                check_collision_entity(&player.base, &enemy3.base.box) ||
-                check_collision_entity(&player.base, &enemy4.base.box)) {
-                player.lives--;
+            // Enemy Logic
+            for (int i = 0; i < NUM_ENEMIES; i++) {
+                if(check_collision_entity(&player.base, &enemies[i].base.box)) {
+                    player.lives--;
 
-                if (player.lives <= 0) {
-                    game_state = GAME_STATE_GAME_OVER;
+                    if (player.lives <= 0) {
+                        game_state = GAME_STATE_GAME_OVER;
+                    } else {
+                        remove_character(&player.base);
+                        remove_enemies(enemies);
+                        player_reset_pos(&player);
+                        enemies_init(enemies);
+                    }
                 }
-
-
-                // Set new positions maybe? 
-                remove_character(player.base.px, player.base.py);
-                remove_character(enemy1.base.px, enemy1.base.py);
-                remove_character(enemy2.base.px, enemy2.base.py);
-                remove_character(enemy3.base.px, enemy3.base.py);
-                remove_character(enemy4.base.px, enemy4.base.py);
-
-                player_reset_pos(&player);
-                enemy_init(&enemy1, 24, 18, 0xE0);
-                enemy_init(&enemy2, 27, 15, 0xE4);
-                enemy_init(&enemy3, 27, 21, 0xE5);
-                enemy_init(&enemy4, 27, 8, 0xE9);
             }
-            
-            // Call the function and save result
-            int points_gained = check_point_collision(&player.base.box, points);
-
-            // Check if we actually hit something
-            if (points_gained > 0) {
-                score += points_gained; // Update score
-                score_left--;           // Update remaining count
-            }
-
-            // Check Game Over
-            if (!score_left) {
+            player.score += check_point_collision(&player.base.box, points);
+            set_score_on_display(player.score);
+            if (player.score >= MAX_POINTS * POINT_VALUE) {
                 game_state = GAME_STATE_GAME_OVER;
             }
+            if (get_btn() && button_cooldown == 0){
+                game_state = GAME_STATE_PAUSE;
+                button_cooldown = 30;
+            }
 
+            //Update object on screen
             point_render(points);
-
-
-            //Enemy updates and rendering¨
-            state_mode_enemy(&enemy1);
-            state_mode_enemy(&enemy2);
-            state_mode_enemy(&enemy3);
-            state_mode_enemy(&enemy4);
-            enemy_render(&enemy1);
-            enemy_render(&enemy2);
-            enemy_render(&enemy3);
-            enemy_render(&enemy4);
-
-
-            //Player update and rendering
+            enemies_update(enemies);
             player_update(&player);
-            player_render(&player);
+            
+            
+            break;
+        case GAME_STATE_PAUSE:
+            draw_pause();
+            if(get_btn() && button_cooldown == 0){
+                game_state = GAME_STATE_RUNNING;
+                button_cooldown = 30;
+                fill_display(0x00); 
+                set_gamemap();    
+            }
             break;
 
         case GAME_STATE_GAME_OVER:
-            if(score == MAX_POINTS * POINT_VALUE) {
+            if(player.score >= MAX_POINTS * POINT_VALUE) {
                 draw_win();
-            }
-            else {
+            } else {
                 draw_game_over();
             }
+            if (get_btn() && button_cooldown == 0) {
+                reset_game_data();
+                game_state = GAME_STATE_RUNNING;
+                button_cooldown = 30;
+            }
             break;
+        
             
         default:
             break;
     }
-    
 }
+

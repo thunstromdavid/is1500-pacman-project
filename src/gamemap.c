@@ -1,3 +1,6 @@
+// Authored by Mathias Jonasson
+// Date 2025-12-05
+
 #include "gamemap.h"
 #include "common.h"
 
