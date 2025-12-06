@@ -58,6 +58,5 @@ Makefile
 
 .bin
 .vscode/
-.txt
 
 build/
