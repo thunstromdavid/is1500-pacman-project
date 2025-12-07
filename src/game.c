@@ -22,7 +22,7 @@ game_state_t game_state;
 point_t points[MAX_POINTS];
 int button_cooldown = 0; 
 
-void reset_game_data() {
+static void reset_game_data() {
     player_init_stats(&player);
     player_reset_pos(&player);
     enemies_init(enemies);
@@ -36,7 +36,7 @@ void game_init(){
     player_init_stats(&player);
 }
 
-int button_active() {
+static int button_active() {
     return (get_btn() && button_cooldown == 0);
 }
 

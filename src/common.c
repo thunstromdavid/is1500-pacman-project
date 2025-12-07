@@ -38,6 +38,7 @@ int get_diff(int a, int b) {
     return b - a;
 }
 
+// Helper function to see how the character will move
 void dir_to_movement(dir_t dir, int *dx, int *dy) {
     *dx = 0;
     *dy = 0;
@@ -104,6 +105,7 @@ static int is_centered(int val) {
     return (val % TILE_SIZE) == 0;
 }
 
+// Shared movement logic for all characters
 void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir_t req_dir) {
     int rdx, rdy;
     // Try requested direction
@@ -129,6 +131,7 @@ void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir
         int check_x = npx;
         int check_y = npy;
         
+        // Adjust check coordinates based on movement direction to check the leading edge
         if (rdx > 0) check_x = npx + TILE_SIZE - 1;
         if (rdy > 0) check_y = npy + TILE_SIZE - 1;
         
@@ -138,7 +141,9 @@ void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir
         int current_tx = *px / TILE_SIZE;
         int current_ty = *py / TILE_SIZE;
         
+        // Check if the new position is valid (either same tile or a valid new tile)
         if ((ntx == current_tx && nty == current_ty) || can_move_to(ntx, nty)) {
+            // Handle screen wrapping
             if (npx < -TILE_SIZE) {
                 npx = SCREEN_WIDTH - TILE_SIZE;
             }
@@ -150,7 +155,7 @@ void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir
             box->x = npx;
             box->y = npy;
         } else {
-            // Wall has been hit. ALiigns to grid
+            // Wall has been hit. Align to grid
             *px = current_tx * TILE_SIZE;
             *py = current_ty * TILE_SIZE;
             *current_dir = DIR_NONE;
@@ -161,6 +166,7 @@ void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir
     }
 }
 
+// Remove character from screen. Otherwise their "shadow" will remain on the screen
 void remove_character(character_t *c) {
-    draw_character(c->px, c->py, 0x00);
+    draw_character(c->px, c->py, PATH_COLOUR);
 }

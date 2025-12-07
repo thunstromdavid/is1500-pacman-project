@@ -16,7 +16,7 @@ void vga_init(){
 void set_pixel(int x, int y, char colour) {
     if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT) return;
 
-    vga_buffer[y * SCREEN_WIDTH + x] = colour;
+    vga_buffer[y * SCREEN_WIDTH + x] = colour; 
 }
 
 void fill_rect(int start_x, int start_y, int end_x, int end_y, char colour) {

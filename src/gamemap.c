@@ -4,7 +4,7 @@
 #include "gamemap.h"
 #include "common.h"
 
-/* * MAP TILE LEGEND:
+/* * MAP TILE DEFINITIONS:
  * --------------------------------
  * 0 = Path (Walkable)
  * 1 = Vertical Wall
