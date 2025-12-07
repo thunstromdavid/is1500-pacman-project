@@ -6,12 +6,10 @@
 
 #include "common.h"
 
-#define MAX_POINTS 280
+#define MAX_POINTS 280 // All avalible path tiles in the map for points to spawn
 #define POINT_VALUE 10
 
 typedef struct {
-    int tx, ty;     
-    int px, py;     
     int active;     
 
     Rect box;

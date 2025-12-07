@@ -37,6 +37,8 @@ void draw_square(int x, int y, int size, char colour) {
     fill_rect(x, y, end_x, end_y, colour);
 }
 
+
+// Here we need to draw different tile types based on the tile_type parameter
 void draw_tile(int x, int y, int tile_type){
     int start_x = x * TILE_SIZE;
     int start_y = y * TILE_SIZE;
@@ -93,6 +95,7 @@ void draw_character(int x, int y, char colour) {
     draw_square(x, y, TILE_SIZE, colour);
 }
 
+// If we only update the pixels of the character, a tail will appear behind it. This function clears that tail.
 void clear_tail(int px, int py, dir_t direction) {
     switch(direction)  {
         case DIR_UP:
@@ -131,7 +134,7 @@ void fill_display(char colour) {
     }
 }
 
-// Draw the full screen images
+// Draw the full screen images. This one is used for the pixel arrays to draw screens like start screen, pause screen, game over screen etc.
 void draw_full_screen(char* pixel_array) {
     for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
         vga_buffer[i] = pixel_array[i];

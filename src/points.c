@@ -12,18 +12,14 @@ void points_init(point_t *points) {
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
         
-            if (count >= MAX_POINTS) return;
-
             if (map[y][x] == PATH) {
-                points[count].tx = x;
-                points[count].ty = y;
                 
                 // Center the point in the tile
-                points[count].px = (x * TILE_SIZE) + (3 * TILE_SIZE / 8);
-                points[count].py = (y * TILE_SIZE) + (3 * TILE_SIZE / 8);
+                int px = (x * TILE_SIZE) + (3 * TILE_SIZE / 8);
+                int py = (y * TILE_SIZE) + (3 * TILE_SIZE / 8);
                 
-                points[count].box.x = points[count].px;
-                points[count].box.y = points[count].py;
+                points[count].box.x = px;
+                points[count].box.y = py;
                 points[count].box.w = TILE_SIZE / 4;
                 points[count].box.h = TILE_SIZE / 4;
 
@@ -34,14 +30,16 @@ void points_init(point_t *points) {
     }
 }
 
+// Render all active points on the screen
 void point_render(point_t *points){
     for(int i = 0; i < MAX_POINTS; i++){
         if(points[i].active){
-            draw_point(points[i].px, points[i].py);
+            draw_point(points[i].box.x, points[i].box.y);
         }
     }
 }
 
+// We deactivate a point when the player collides with it and return the point value
 int check_point_collision(Rect *box, point_t *points) {
     for (int i = 0; i < MAX_POINTS; i++) {
         if (points[i].active) {

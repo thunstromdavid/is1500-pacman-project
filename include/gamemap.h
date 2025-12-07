@@ -8,6 +8,7 @@
 #include "graphics.h"
 #include "common.h"
 
+// Definition of tile types with a few different usecases
 #define PATH 0
 #define WALL_VERTICAL 1
 #define WALL_HORIZONTAL 2

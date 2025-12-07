@@ -4,6 +4,18 @@
 #include "gamemap.h"
 #include "common.h"
 
+/* * MAP TILE LEGEND:
+ * --------------------------------
+ * 0 = Path (Walkable)
+ * 1 = Vertical Wall
+ * 2 = Horizontal Wall
+ * 3 = Top Left Corner
+ * 4 = Top Right Corner
+ * 5 = Bottom Left Corner
+ * 6 = Bottom Right Corner
+ * 7 = Outside Map (Empty space)
+ * -------------------------------
+ */
 int map[MAP_HEIGHT][MAP_WIDTH] = {
     {7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7},
     {7,7,7,7,7,7,3,2,2,2,2,2,2,2,2,2,2,2,2,4,3,2,2,2,2,2,2,2,2,2,2,2,2,4,7,7,7,7,7,7},

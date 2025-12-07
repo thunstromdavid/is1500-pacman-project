@@ -4,11 +4,13 @@
 #ifndef COMMON
 #define COMMON
 
+// Rectangle structure to make collision detection easier
 typedef struct {
     int x, y;
     int w, h;
 } Rect;
 
+// Direction enumeration for character movement
 typedef enum{
     DIR_NONE = -1,
     DIR_DOWN = 0,
@@ -17,6 +19,7 @@ typedef enum{
     DIR_RIGHT = 3
 } dir_t;
 
+// Character structure to represent the shared attributes of players and enemies
 typedef struct {
     int tx, ty;          // Tile Position
     int px, py;          // Pixel Position
