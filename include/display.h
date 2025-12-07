@@ -1,3 +1,6 @@
+// Authored by Mathias Jonasson
+// Date 2025-12-02
+
 #ifndef DISPLAY
 #define DISPLAY
 

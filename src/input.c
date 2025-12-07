@@ -1,3 +1,6 @@
+// Authored by Mathias Jonasson
+// Date 2025-11-29
+
 #include "input.h"
 #include "player.h"
 #include "common.h"

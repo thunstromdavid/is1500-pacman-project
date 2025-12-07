@@ -1,3 +1,6 @@
+// Authored by David Thunström
+// Date 2025-12-03
+
 #ifndef SCREENS
 #define SCREENS
 

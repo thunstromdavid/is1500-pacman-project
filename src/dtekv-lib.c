@@ -1,3 +1,6 @@
+// --- Lab Utility Functions ---
+// Helper functions reused from previous course labs 
+
 #include "dtekv-lib.h"
 
 #define JTAG_UART ((volatile unsigned int*) 0x04000040)

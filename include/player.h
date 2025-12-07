@@ -1,4 +1,4 @@
-// Authored by David Thunström
+// Authored by Mathias Jonasson
 // Date 2025-11-10
 
 #ifndef PLAYER

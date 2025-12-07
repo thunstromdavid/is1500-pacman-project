@@ -1,3 +1,6 @@
+// Authored by Mathias Jonasson
+// Date 2025-11-29
+
 #ifndef INPUT
 #define INPUT
 

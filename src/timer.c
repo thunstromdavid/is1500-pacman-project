@@ -4,7 +4,7 @@
 #include "game.h"
 #include "timer.h"
 
-// Here we have used code from the labs
+// Here we have used that we wrote in the labshere
 
 volatile int* timer = (volatile int*) 0x04000020;
 
@@ -37,17 +37,14 @@ void handle_interrupt(void){
     }
 }
 
-// Get elapsed time in ticks
 int get_tick_count(void) {
     return tick_count;
 }
 
-// Get elapsed time in seconds
 int get_time_seconds(void) {
     return tick_count / ticks_per_second;
 }
 
-// Reset timer
 void reset_timer(void) {
     tick_count = 0;
 }

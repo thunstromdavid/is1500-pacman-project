@@ -4,8 +4,6 @@
 #ifndef GAME
 #define GAME
 
-
-
 typedef enum{
     GAME_STATE_INIT,
     GAME_STATE_PAUSE,
@@ -15,9 +13,5 @@ typedef enum{
 
 void game_init(void);
 void game_update(void);
-
-
-
-
 
 #endif 

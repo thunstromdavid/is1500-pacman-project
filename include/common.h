@@ -41,7 +41,7 @@ int can_move_to(int tx, int ty);
 
 int is_centered(int val);
 
-void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir_t req_dir, int speed);
+void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir_t req_dir);
 
 void remove_character(character_t *c);
 

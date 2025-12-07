@@ -1,4 +1,4 @@
-// Authored by David Thunström and Mathias Jonasson
+// Authored by Mathias Jonasson David Thunström
 // Date 2025-12-05
 
 #include "game.h"
@@ -16,7 +16,6 @@
 //#include "dtekv-lib.h"
 
 
-// Define Global Variables
 player_t player;
 enemy_t enemies[NUM_ENEMIES];
 game_state_t game_state;
@@ -38,14 +37,15 @@ void game_init(){
 }
 
 void game_update() {
-    static int button_cooldown = 0;
+    // Avoid unwanted button beheavior
+    int button_cooldown = 0; 
     if (button_cooldown > 0) button_cooldown--;
     
     switch(game_state) {
         case GAME_STATE_INIT:
-            draw_menu();
+            draw_full_screen(START_SCREEN);
             
-            // Check button HERE. If pressed, transition state.
+            // Check button HERE. If pressed, switch state.
             if (get_btn() && button_cooldown == 0) {
                 reset_game_data(); // Reset stats/map
                 game_state = GAME_STATE_RUNNING;
@@ -86,11 +86,10 @@ void game_update() {
             point_render(points);
             enemies_update(enemies);
             player_update(&player);
-            
-            
             break;
+
         case GAME_STATE_PAUSE:
-            draw_pause();
+            draw_full_screen(PAUSE_SCREEN);
             if(get_btn() && button_cooldown == 0){
                 game_state = GAME_STATE_RUNNING;
                 button_cooldown = 30;
@@ -101,9 +100,9 @@ void game_update() {
 
         case GAME_STATE_GAME_OVER:
             if(player.score >= MAX_POINTS * POINT_VALUE) {
-                draw_win();
+                draw_full_screen(WIN_SCREEN);
             } else {
-                draw_game_over();
+                draw_full_screen(GAME_OVER_SCREEN);
             }
             if (get_btn() && button_cooldown == 0) {
                 reset_game_data();

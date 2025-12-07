@@ -1,4 +1,4 @@
-// Authored by Mathias Jonasson
+// Authored by Mathias Jonasson and David Thunström
 // Date 2025-12-05
 
 #include "points.h"

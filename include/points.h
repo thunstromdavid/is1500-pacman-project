@@ -1,3 +1,6 @@
+// Authored by David Thunström
+// Date 2025-11-10
+
 #ifndef POINTS
 #define POINTS
 

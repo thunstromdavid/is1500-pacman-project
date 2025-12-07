@@ -109,7 +109,7 @@ int is_centered(int val) {
     return (val % TILE_SIZE) == 0;
 }
 
-void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir_t req_dir, int speed) {
+void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir_t req_dir) {
     int rdx, rdy;
     // Try requested direction
     if (req_dir != DIR_NONE && req_dir != *current_dir) {
@@ -128,8 +128,8 @@ void update_entity_position(int *px, int *py, Rect *box, dir_t *current_dir, dir
     dir_to_movement(*current_dir, &rdx, &rdy);
     
     if (*current_dir != DIR_NONE) {
-        int npx = *px + (rdx * speed);
-        int npy = *py + (rdy * speed);
+        int npx = *px + rdx;
+        int npy = *py + rdy;
 
         int check_x = npx;
         int check_y = npy;

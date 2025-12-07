@@ -1,5 +1,6 @@
 // Authored by Mathias Jonasson and David Thunström
 // Date 2025-11-29
+
 #include "enemy.h"
 #include "common.h"
 #include "graphics.h"
@@ -26,7 +27,7 @@ void enemies_init(enemy_t *enemies_array) {
 }
 
 void state_mode_enemy(enemy_t *e) {
-    update_entity_position(&e->base.px, &e->base.py, &e->base.box, &e->base.dir, e->base.req_dir, 1);
+    update_entity_position(&e->base.px, &e->base.py, &e->base.box, &e->base.dir, e->base.req_dir);
     
     int new_dir = get_random(4);
   

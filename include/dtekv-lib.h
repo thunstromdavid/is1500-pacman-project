@@ -1,4 +1,6 @@
-void printc(char );
+// --- Lab Utility Functions ---
+// Helper functions reused from previous course labs for I/O and handling.void printc(char )
+
 void print(char *);
 void print_dec(unsigned int);
 void print_hex32 ( unsigned int);

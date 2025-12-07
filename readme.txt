@@ -27,7 +27,7 @@ Output:
 The compiled binary will be located at:
 build/main.bin
 
-:Step by step guide (UNIX):
+Step by step guide (UNIX):
 lsusb (make sure Altera Blaster shows up)
 jtagconfig (if this hangs, run "killall jtagd")
 cd dtekv-tools

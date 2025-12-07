@@ -1,4 +1,4 @@
-// Authored by David Thunström and Mathias Jonasson
+// Authored by Mathias Jonasson and David Thunström
 // Date 2025-12-05
 
 #ifndef MEASUREMENT
