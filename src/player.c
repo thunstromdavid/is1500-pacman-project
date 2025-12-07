@@ -1,8 +1,10 @@
 // Authored by David Thunström
 // Date 2025-11-10
+
 #include "player.h"
 #include "common.h"
 #include "graphics.h"
+#include "gamemap.h"
 
 
 void player_reset_pos(player_t *p){
@@ -22,12 +24,16 @@ void player_handle_input(player_t *p, dir_t input_dir){
     }
 }
 
-void player_update(player_t *p){
-    update_entity_position(&p->base.px, &p->base.py, &p->base.box, &p->base.dir, p->base.req_dir);
-    player_render(p);
+static void player_render(player_t *p){
+    clear_tail(p->base.px, p->base.py, p->base.dir);
+    draw_character(p->base.px, p->base.py, p->base.colour); 
 }
 
-void player_render(player_t *p){
-    redraw_tile(p->base.px, p->base.py, p->base.dir);
-    draw_character(p->base.px, p->base.py, p->base.colour); 
+void player_update(player_t *p){
+    int old_x = p->base.px;
+    int old_y = p->base.py;
+
+    update_entity_position(&p->base.px, &p->base.py, &p->base.box, &p->base.dir, p->base.req_dir);
+    handle_screen_wrap(old_x, old_y, p->base.px, p->base.py);
+    player_render(p);
 }

@@ -1,11 +1,10 @@
-// Authored by David Thunström and Mathias Jonasson
+// Authored by Mathias Jonasson and David Thunström
 // Date 2025-12-05
 
 #include "game.h"
 #include "timer.h"
 
-// Here we have used that we wrote in the labshere
-
+// Here we have used that we wrote in the labs
 volatile int* timer = (volatile int*) 0x04000020;
 
 // Time tracking variables
@@ -13,7 +12,6 @@ static volatile int tick_count = 0;
 static int ticks_per_second = 0;                                   
 
 extern void enable_interrupt(void);
-
 
 void timer_init(int fps){
 

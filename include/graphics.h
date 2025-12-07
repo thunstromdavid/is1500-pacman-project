@@ -12,13 +12,10 @@
 #define SCREEN_HEIGHT 240
 #define PACMAN_COLOUR 0xFC
 #define POINT_COLOUR 0xFF
+#define WALL_COLOUR 0x1F
+#define PATH_COLOUR 0x00
 
-// Initialize VGA output
 void vga_init(void);
-
-// Set value of pixel at position x and y to 8 bit color
-// Might change to 16 bit? Software resources unclear
-void set_pixel(int x, int y, char color);
 
 void draw_tile(int x, int y, int tile_type);
 
@@ -26,12 +23,12 @@ void draw_point(int x, int y);
 
 void draw_character(int x, int y, char colour);
 
-void redraw_tile(int old_x, int old_y, dir_t direction);
+void handle_screen_wrap(int old_x, int old_y, int new_x, int new_y);
 
-// Fill display
+void clear_tail(int old_x, int old_y, dir_t direction);
+
 void fill_display(char color);
 
-// Drawing the screens for the different game states
 void draw_full_screen(char* pixel_array);
 
 #endif

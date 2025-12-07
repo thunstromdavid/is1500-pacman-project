@@ -15,4 +15,5 @@ typedef struct {
 void enemies_init(enemy_t *enemies_array);
 void enemies_update(enemy_t *enemies_array);
 void remove_enemies(enemy_t *enemies_array);
+int check_collision_with_enemies(character_t *player, enemy_t *enemies, int num_enemies);
 #endif

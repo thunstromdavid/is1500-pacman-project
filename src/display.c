@@ -2,7 +2,7 @@
 // Date 2025-12-02
 #include "display.h"
 
-char binary_value[] = {
+static char binary_value[] = {
   0b01000000,
   0b01111001,
   0b00100100,
@@ -15,12 +15,12 @@ char binary_value[] = {
   0b00011000,
 };
 
-void set_displays(int display_number, int value) {
+static void set_displays(int display_number, int value) {
   volatile int* p = (volatile int*) (0x04000050 + display_number * 0x10);
   *p = binary_value[value];
 }
 
-int math_pow(int base, int exp) {
+static int math_pow(int base, int exp) {
     int result = 1;
     
     for (int i = 0; i < exp; i++) {

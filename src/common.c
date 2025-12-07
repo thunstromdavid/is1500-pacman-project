@@ -33,6 +33,11 @@ int get_random(int range) {
     return (((unsigned int)(next_random / 65536) % 32768) + get_sw()) % range; // Add switch state to improve randomness
 }
 
+int get_diff(int a, int b) {
+    if (a > b) return a - b;
+    return b - a;
+}
+
 void dir_to_movement(dir_t dir, int *dx, int *dy) {
     *dx = 0;
     *dy = 0;
@@ -54,7 +59,6 @@ void dir_to_movement(dir_t dir, int *dx, int *dy) {
     }
 }
 
-// Remade to be able to check collision between character and rectangle (points or enenemy)
 int check_rect_collision(Rect *r1, Rect *r2) {
     int left1   = r1->x;
     int right1  = r1->x + r1->w;
@@ -83,16 +87,7 @@ int check_collision_entity(character_t *p, Rect *r) {
     return 0;
 }
 
-int check_collision_entities(character_t *player, character_t *enemies, int num_enemies) {
-    for (int i = 0; i < num_enemies; i++) {
-        if (check_collision_entity(player, &enemies[i].box)) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int can_move_to(int tx, int ty){
+static int can_move_to(int tx, int ty){
     if (ty < 0 || ty >= MAP_HEIGHT){
         return 0;
     }
@@ -105,7 +100,7 @@ int can_move_to(int tx, int ty){
     return map[ty][tx] == PATH;
 }
 
-int is_centered(int val) {
+static int is_centered(int val) {
     return (val % TILE_SIZE) == 0;
 }
 

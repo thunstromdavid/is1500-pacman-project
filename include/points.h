@@ -18,13 +18,7 @@ typedef struct {
 } point_t;
 
 void points_init(point_t *points);
-
-
-//void point_spawn(void);
-
-
 void point_render(point_t *points);
-
 int check_point_collision(Rect *box, point_t *points);
 
 #endif

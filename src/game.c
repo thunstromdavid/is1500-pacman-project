@@ -20,8 +20,8 @@ player_t player;
 enemy_t enemies[NUM_ENEMIES];
 game_state_t game_state;
 point_t points[MAX_POINTS];
+int button_cooldown = 0; 
 
-// Helper to reset all data for a fresh run
 void reset_game_data() {
     player_init_stats(&player);
     player_reset_pos(&player);
@@ -36,18 +36,20 @@ void game_init(){
     player_init_stats(&player);
 }
 
+int button_active() {
+    return (get_btn() && button_cooldown == 0);
+}
+
 void game_update() {
-    // Avoid unwanted button beheavior
-    int button_cooldown = 0; 
+
     if (button_cooldown > 0) button_cooldown--;
     
     switch(game_state) {
         case GAME_STATE_INIT:
             draw_full_screen(START_SCREEN);
             
-            // Check button HERE. If pressed, switch state.
-            if (get_btn() && button_cooldown == 0) {
-                reset_game_data(); // Reset stats/map
+            if (button_active()) {
+                reset_game_data(); 
                 game_state = GAME_STATE_RUNNING;
                 button_cooldown = 30; // Wait 0.5 seconds (30 ticks)
             }
@@ -57,27 +59,27 @@ void game_update() {
             set_score_on_display(player.score);
             handle_input(&player);
 
-            // Enemy Logic
-            for (int i = 0; i < NUM_ENEMIES; i++) {
-                if(check_collision_entity(&player.base, &enemies[i].base.box)) {
-                    player.lives--;
+            // Enemy logic 
+            if(check_collision_with_enemies(&player.base, enemies, NUM_ENEMIES)) {
+                player.lives--;
 
-                    if (player.lives <= 0) {
-                        game_state = GAME_STATE_GAME_OVER;
-                    } else {
-                        remove_character(&player.base);
-                        remove_enemies(enemies);
-                        player_reset_pos(&player);
-                        enemies_init(enemies);
-                    }
+                if (player.lives <= 0) {
+                    game_state = GAME_STATE_GAME_OVER;
+                } else {
+                    remove_character(&player.base);
+                    remove_enemies(enemies);
+                    player_reset_pos(&player);
+                    enemies_init(enemies);
                 }
             }
+
+            // Points logic
             player.score += check_point_collision(&player.base.box, points);
             set_score_on_display(player.score);
             if (player.score >= MAX_POINTS * POINT_VALUE) {
                 game_state = GAME_STATE_GAME_OVER;
             }
-            if (get_btn() && button_cooldown == 0){
+            if (button_active()){
                 game_state = GAME_STATE_PAUSE;
                 button_cooldown = 30;
             }
@@ -90,7 +92,7 @@ void game_update() {
 
         case GAME_STATE_PAUSE:
             draw_full_screen(PAUSE_SCREEN);
-            if(get_btn() && button_cooldown == 0){
+            if(button_active()){
                 game_state = GAME_STATE_RUNNING;
                 button_cooldown = 30;
                 fill_display(0x00); 
@@ -104,16 +106,13 @@ void game_update() {
             } else {
                 draw_full_screen(GAME_OVER_SCREEN);
             }
-            if (get_btn() && button_cooldown == 0) {
+            if (button_active()) {
                 reset_game_data();
                 game_state = GAME_STATE_RUNNING;
                 button_cooldown = 30;
             }
             break;
-        
-            
         default:
             break;
     }
 }
-

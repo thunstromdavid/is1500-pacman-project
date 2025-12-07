@@ -1,5 +1,6 @@
-// Authored by David Thunström and Mathias Jonasson
+// Authored by Mathias Jonasson and David Thunström
 // Date 2025-12-05
+
 #include "dtekv-lib.h"
 #include "timer.h"
 #include "enemy.h"
@@ -33,13 +34,10 @@ void read_and_print_counters() {
     print_dec(val / 30000); 
     print("(ms)");
 
-
     asm volatile ("csrr %0, minstret" : "=r"(val));
     print("\nInstructions Retired: \n");
     print_dec(val);
     
-
-
     asm volatile ("csrr %0, mhpmcounter3" : "=r"(val));
     print("\nHPM Counter 3: ");
     print_dec(val);
